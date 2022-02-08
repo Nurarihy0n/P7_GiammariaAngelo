@@ -6,6 +6,7 @@ const modelsPost = connection.define('modelsPost', {
     userId: { type: Sequelize.INTEGER, allowNull: false},
     title: { type: Sequelize.STRING },
     content: { type: Sequelize.STRING },
+    imageUrl: { type: Sequelize.STRING},
     postDate: { type: Sequelize.INTEGER },
     like: { type: Sequelize.INTEGER, default: 0},
     dislikes: { type: Sequelize.INTEGER, default: 0}

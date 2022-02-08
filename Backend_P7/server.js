@@ -12,14 +12,14 @@ const normalizePort = val => {
     }
     return false;
   };
-  const port = normalizePort(process.env.PORT || '3000');
+  const port = normalizePort(process.env.PORT ||'3000');
   app.set('port', port);
   
   const errorHandler = error => {
     if (error.syscall !== 'listen') {
       throw error;
     }
-    const address = server.address();
+    const address = app.address();
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
     switch (error.code) {
       case 'EACCES':
@@ -37,15 +37,18 @@ const normalizePort = val => {
 
   //DB connection
   require("./database/connection");
-  sequelize.sync();
-  
-  const server = http.createServer(app);
-  
-  server.on('error', errorHandler);
-  server.on('listening', () => {
-    const address = server.address();
-    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-    console.log('Listening on ' + bind);
+
+  sequelize.sync().then(() => {
+    app.on('error', errorHandler);
+    app.on('listening', () => {
+      const address = app.address();
+      const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+      console.log('Listening on ' + bind);
+    });
+
+
   });
-  
-  server.listen(port);
+
+  app.listen(port, () => {
+    console.log("Server running on port", port);
+  });

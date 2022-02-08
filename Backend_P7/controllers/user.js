@@ -24,13 +24,15 @@ exports.signup = (req, res, next) => {
 
 //connection user already exist
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    console.log(req.body.email);
+    User.findOne({ where: { email: req.body.email }})
     .then(user => {
         if(!user) {
             return res.status(401).json({ error: 'User not find !'});
         }
+        console.log(req.body.email)
         console.log(req.body.password);
-        console.log(user.password);
+        console.log(user);
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
             if(!valid) {

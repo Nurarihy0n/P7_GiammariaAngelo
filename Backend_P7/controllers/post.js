@@ -4,7 +4,7 @@ const User = require('../models/User');
 const { STATUS_CODES } = require('http');
 const { post } = require('../routes/post');
 const { title } = require('process');
-const userLiked = require('../models/userLiked');
+const userLiked = require('../models/userLiked')
 
 // Creation d'un post 
 exports.createPost = (req, res, next) => {
@@ -50,23 +50,33 @@ exports.updatePost = (req, res, next) => {
         .catch(err => res.status(400).json({ err, message: 'Something wrong with modification !' }));
 };
 
-//Delete a post
+//DELETE A POST
 exports.deletePost = (req, res, next) => {
     const { postId } = req.params;
     Post.findByPk(postId)
         .then(post => {
-            const filename = post.imageUrl.split('/images')[1];
-            fs.unlink(`images/${filename}`, () => {
-                if(err){
-                    console.log('Failed to delete image'+ err);
-                }
+            console.log(post.imageUrl);
+            if (post.imageUrl == null) {
                 Post.destroy({ where: { postId: postId }, force: true })
-                    .then(() => res.status(200).json({ msg: "Post deleted !" }))
-                    .catch(error => res.status(400).json({ error }));
-            })
+                .then(() => res.status(200).json({ msg: "Post has been deleted !" }))
+                .catch(error => res.status(400).json({ msg: 'Post can\' get be deleted !', error }));
+            } else {
+                const filename = post.imageUrl.split('/images')[1];
+                try {
+                    fs.unlink(`images/${filename}`, () => {
+                        Post.destroy({ where: { postId: postId }, force: true })
+                            .then(() => res.status(200).json({ msg: "Post + image has been deleted !" }))
+                            .catch(error => res.status(400).json({ msg: 'Post with image can\' get be deleted !', error }));
+                    })
+                } catch (error) {
+                    console.log('Erreur pour supprimer le post avec l\image');
+                }
+            }
         })
-        .catch(err => res.status(500).json({ err: 'Erreur' }));
-};
+        .catch(err => res.status(500).json({ msg: 'erreur', err }));
+}
+
+
 
 
 /********* CRUD TERMINE *********/
@@ -78,6 +88,9 @@ exports.likeDislike = (req, res, next) => {
     let userId = req.body.userId;
     let like = req.body.like;
     const {postId} = req.params;
+    console.log(userId);
+    console.log(like);
+    console.log(postId);
     let post = Post.findByPk(postId)
     .then( post => {
         if(like == 1){
@@ -87,6 +100,6 @@ exports.likeDislike = (req, res, next) => {
             .catch(err => res.status(400).json({ err: "Post can't be liked !"}))
         }
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error, msg: 'Probleme avec like/dislike' }));
 
 }

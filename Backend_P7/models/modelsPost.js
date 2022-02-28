@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const connection = require('../database/connection');
 const userLiked = require('./userLiked');
+const Commentaire = require('./Commentaire');
 
 const modelsPost = connection.define('modelsPost', {
     postId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true }, 
@@ -17,6 +18,13 @@ modelsPost.hasMany(userLiked, {
     onUpdate: 'CASCADE'
 });
 userLiked.belongsTo(modelsPost);
+
+modelsPost.hasMany(Commentaire, {
+    foreignKey: 'userId, postId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+Commentaire.belongsTo(modelsPost);
 
 
 

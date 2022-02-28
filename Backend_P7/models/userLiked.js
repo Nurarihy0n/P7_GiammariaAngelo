@@ -3,8 +3,8 @@ const connection = require('../database/connection');
 const modelsPost = require('./modelsPost');
 
 const userLiked = connection.define('userLiked', {
-    userId: { type: Sequelize.INTEGER},
-    postId: { type: Sequelize.INTEGER},
+    userId: { type: Sequelize.INTEGER, primaryKey: true},
+    postId: { type: Sequelize.INTEGER, primaryKey: true},
     liked: { type: Sequelize.INTEGER}
 });
 

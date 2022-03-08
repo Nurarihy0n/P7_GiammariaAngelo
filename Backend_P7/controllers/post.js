@@ -91,15 +91,47 @@ exports.likeDislike = (req, res, next) => {
     console.log(userId);
     console.log(like);
     console.log(postId);
-    let post = Post.findByPk(postId)
-    .then( post => {
-        if(like == 1){
-            Post.update({ postId }),
-            { $push: { userLiked: userId, postId }, $inc: { likes:1 }}
-            .then(() => res.status(200).json({ msg: "Post liked !"}))
-            .catch(err => res.status(400).json({ err: "Post can't be liked !"}))
-        }
-    })
-    .catch(error => res.status(500).json({ error, msg: 'Probleme avec like/dislike' }));
+
+    // 1. Si'utilisateur n'a pas encore liké le post, alors je crée un like dans la table userLiked
+
+
+    // 2. Si l'utilisateur a déjà liké le post, alors, je ne like plus
+
+
+    // 3. Si l'utilisateur veut disliker un post, alors s'il n'a pas liké, alors je créé un disliker
+
+
+    // 4. Si l'utilisateur veut disliker un post, et s'il a déjà liké ce post, alors son like est annulé
+
+
+    // 5. Si l'utilisateur veut disliker un post, et s'il a déjà disliké ce post, alors on ne fait rien
+
+
+
+    let userLike = userLiked.findByPk(rpostId, userId);
+
+    if (userLike == null) {
+        const like = new userLiked({
+            "userId": userId,
+            "postId": postId,
+            "liked": 1
+        })
+        .then(like => {return res.status(201).json(like)})
+        .catch(err => {return res.status(500).json({err, message: "Erreur de création du like"})})
+    }
+
+
+    
+    // let post = Post.findByPk(postId)
+    // .then( post => {
+    //     if(like == 1){
+    //         Post.update({ postId }),
+    //         { where { userLiked: userId, postId }, $inc: { likes:1 }}
+    //         .then(() => res.status(200).json({ msg: "Post liked !"}))
+    //         .catch(err => res.status(400).json({ err: "Post can't be liked !"}))
+    //     }
+    // })
+    // .catch(error => res.status(500).json({ error, msg: 'Probleme avec like/dislike' }));
+
 
 }

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 //Creation of user
 exports.signup = (req, res, next) => {
+    console.log(req.body.email);
     console.log(req.body.password);
     //Hash password
     bcrypt.hash(req.body.password, 10)

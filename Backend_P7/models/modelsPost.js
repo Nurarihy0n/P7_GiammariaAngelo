@@ -13,14 +13,14 @@ const modelsPost = connection.define('modelsPost', {
 });
 
 modelsPost.hasMany(userLiked, {
-    foreignKey: 'userId, postId',
+    foreignKey: 'postId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 userLiked.belongsTo(modelsPost);
 
 modelsPost.hasMany(Commentaire, {
-    foreignKey: 'userId, postId',
+    foreignKey: 'postId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });

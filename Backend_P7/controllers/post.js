@@ -108,7 +108,7 @@ exports.likeDislike = (req, res, next) => {
 
 
 
-    let userLike = userLiked.findByPk(rpostId, userId);
+    let userLike = userLiked.findByPk(postId, userId);
 
     if (userLike == null) {
         const like = new userLiked({

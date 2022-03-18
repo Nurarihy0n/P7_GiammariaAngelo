@@ -14,13 +14,19 @@ const User = connection.define('User',{
     moderateur: { type: Sequelize.BOOLEAN, defaultValue: false}
 });
 
-User.hasMany(modelsPost);
+User.hasMany(modelsPost, {
+    foreignKey: 'userId' 
+});
 modelsPost.belongsTo(User);
 
-User.hasMany(Commentaire);
+User.hasMany(Commentaire, {
+    foreignKey: 'userId' 
+});
 Commentaire.belongsTo(User);
 
-User.hasMany(userLiked);
+User.hasMany(userLiked, {
+    foreignKey: 'userId' 
+});
 userLiked.belongsTo(User);
 
 

@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 
 const Commentaire = connection.define('Commentaire', {
     comId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-    content: { type: Sequelize.STRING},
+    content: { type: Sequelize.STRING, allowNull: false},
     postId: { type: Sequelize.INTEGER,allowNull: false},
     userId: { type: Sequelize.INTEGER, allowNull: false}
 });

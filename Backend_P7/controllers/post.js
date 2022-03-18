@@ -4,7 +4,8 @@ const User = require('../models/User');
 const { STATUS_CODES } = require('http');
 const { post } = require('../routes/post');
 const { title } = require('process');
-const userLiked = require('../models/userLiked')
+const userLiked = require('../models/userLiked');
+const Commentaire = require('../models/Commentaire');
 
 // Creation d'un post 
 exports.createPost = (req, res, next) => {
@@ -84,13 +85,13 @@ exports.deletePost = (req, res, next) => {
 // ||||||||||| CONTROLLERS |||||||||||||| 
 // VVVVVVVVVVV    LIKES    VVVVVVVVVVVVVV
 
-exports.likeDislike = (req, res, next) => {
-    let userId = req.body.userId;
-    let like = req.body.like;
-    const {postId} = req.params;
-    console.log(userId);
-    console.log(like);
-    console.log(postId);
+// exports.likeDislike = async (req, res, next) => {
+//     let userId = req.body.userId;
+//     let like = req.body.like;
+//     const {postId} = req.params;
+//     console.log(userId);
+//     console.log(like);
+//     console.log(postId);
 
     // 1. Si'utilisateur n'a pas encore liké le post, alors je crée un like dans la table userLiked
 
@@ -108,30 +109,77 @@ exports.likeDislike = (req, res, next) => {
 
 
 
-    let userLike = userLiked.findByPk(postId, userId);
+    //let userLike = userLiked.findByPk(postId, userId);
 
-    if (userLike == null) {
-        const like = new userLiked({
-            "userId": userId,
-            "postId": postId,
-            "liked": 1
-        })
-        .then(like => {return res.status(201).json(like)})
-        .catch(err => {return res.status(500).json({err, message: "Erreur de création du like"})})
-    }
-
-
+    // let userLike = await userLiked.findOne({ where: {userId: 1, postId: 1}});
     
-    // let post = Post.findByPk(postId)
-    // .then( post => {
-    //     if(like == 1){
-    //         Post.update({ postId }),
-    //         { where { userLiked: userId, postId }, $inc: { likes:1 }}
-    //         .then(() => res.status(200).json({ msg: "Post liked !"}))
-    //         .catch(err => res.status(400).json({ err: "Post can't be liked !"}))
+    // if (userLike == null) {
+    //     console.log(userLike);
+
+    //     try {
+    //         const like = await new userLiked({
+    //             "userId": userId,
+    //             "postId": postId,
+    //             "liked": 1
+    //         }).save()
+
+    //         if (like != null) {
+    //             return res.status(201).json(like);
+    //         } 
     //     }
-    // })
-    // .catch(error => res.status(500).json({ error, msg: 'Probleme avec like/dislike' }));
+    //     catch(err) {
+    //         return res.status(500).json({err, message: "Erreur de création du like"});
+    //     }
+    // }
+    // else {
+    //     const like = await new userLiked({
+    //         "userId": userId,
+    //         "postId": postId,
+    //         "liked": 1
+    //     }).save()
+    //     return res.status(200).json({message: "l'utilisateur a dejà liké ce post", userLike});
+    // }
+//}
 
 
-}
+
+
+
+
+//|||||||||||||||||||||||| SECTION DES COMMENTAIRES ||||||||||||||||||||||||||
+
+//1. Recuperation de l'id du post
+//2. Creation du commentaires
+//3. Enregistre le commentaire avec l'id du post 
+
+exports.createComment = (req, res, next) => {
+    
+    let userId = req.body.userId;
+    let postId = req.params;
+    console.log(userId);
+    console.log(postId);
+
+    const comment = new Commentaire ({
+        ...req.body,
+        postId: postId
+    });
+    comment.save()
+    .then(() => res.status(201).json({ msg: "Le commentaire a ete cree" }))
+    .catch(error => res.status(500).json({ error, message: "Probleme avec la creation du commentaire"}));
+};
+
+
+
+
+
+exports.readComment = (req, res, next) => {
+
+};
+
+exports.modifyComment = (req, res, next) => {
+
+};
+
+exports.deleteComment = (req, res, next) => {
+
+};

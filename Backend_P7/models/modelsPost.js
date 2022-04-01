@@ -17,14 +17,12 @@ modelsPost.hasMany(userLiked, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
-userLiked.belongsTo(modelsPost);
 
 modelsPost.hasMany(Commentaire, {
     foreignKey: 'postId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
-Commentaire.belongsTo(modelsPost);
 
 
 

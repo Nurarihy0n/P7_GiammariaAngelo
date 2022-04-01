@@ -17,17 +17,15 @@ const User = connection.define('User',{
 User.hasMany(modelsPost, {
     foreignKey: 'userId' 
 });
-modelsPost.belongsTo(User);
 
 User.hasMany(Commentaire, {
     foreignKey: 'userId' 
 });
-Commentaire.belongsTo(User);
 
 User.hasMany(userLiked, {
     foreignKey: 'userId' 
 });
-userLiked.belongsTo(User);
+
 
 
 

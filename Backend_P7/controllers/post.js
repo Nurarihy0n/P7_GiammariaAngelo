@@ -6,6 +6,7 @@ const { post } = require('../routes/post');
 const { title } = require('process');
 const userLiked = require('../models/userLiked');
 const Commentaire = require('../models/Commentaire');
+const { json } = require('express/lib/response');
 
 // Creation d'un post 
 exports.createPost = (req, res, next) => {
@@ -46,7 +47,7 @@ exports.updatePost = (req, res, next) => {
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
     console.log(req.body);
-    Post.update({ ...postObject}, { where: { postId: req.params.postId } })
+    Post.update({ ...postObject }, { where: { postId: req.params.postId } })
         .then(() => res.status(201).json({ message: 'Post successfuly updated !' }))
         .catch(err => res.status(400).json({ err, message: 'Something wrong with modification !' }));
 };
@@ -59,8 +60,8 @@ exports.deletePost = (req, res, next) => {
             console.log(post.imageUrl);
             if (post.imageUrl == null) {
                 Post.destroy({ where: { postId: postId }, force: true })
-                .then(() => res.status(200).json({ msg: "Post has been deleted !" }))
-                .catch(error => res.status(400).json({ msg: 'Post can\' get be deleted !', error }));
+                    .then(() => res.status(200).json({ msg: "Post has been deleted !" }))
+                    .catch(error => res.status(400).json({ msg: 'Post can\' get be deleted !', error }));
             } else {
                 const filename = post.imageUrl.split('/images')[1];
                 try {
@@ -85,13 +86,13 @@ exports.deletePost = (req, res, next) => {
 // ||||||||||| CONTROLLERS |||||||||||||| 
 // VVVVVVVVVVV    LIKES    VVVVVVVVVVVVVV
 
-// exports.likeDislike = async (req, res, next) => {
-//     let userId = req.body.userId;
-//     let like = req.body.like;
-//     const {postId} = req.params;
-//     console.log(userId);
-//     console.log(like);
-//     console.log(postId);
+exports.likeDislike = async (req, res, next) => {
+    let userId = req.body.userId;
+    let like = req.body.like;
+    const { postId } = req.params;
+    console.log(userId);
+    console.log(like);
+    console.log(postId);
 
     // 1. Si'utilisateur n'a pas encore liké le post, alors je crée un like dans la table userLiked
 
@@ -108,41 +109,52 @@ exports.deletePost = (req, res, next) => {
     // 5. Si l'utilisateur veut disliker un post, et s'il a déjà disliké ce post, alors on ne fait rien
 
 
+    let userLike = await userLiked.findOne({ where: { userId: userId, postId: postId } });
+    // cree l'utilisateur qui like dans la bdd
+    if (userLike == null) {
+        try {
+            const like = await new userLiked({
+                "userId": userId,
+                "postId": postId,
+                "liked": 1
+            }).save()
 
-    //let userLike = userLiked.findByPk(postId, userId);
+            if (like != null) {
+                return res.status(201).json(like);
+            }
 
-    // let userLike = await userLiked.findOne({ where: {userId: 1, postId: 1}});
-    
-    // if (userLike == null) {
-    //     console.log(userLike);
+        }
+        catch (err) {
+            return res.status(500).json({ err, message: "Erreur de création du like" });
+        }
+    }
+    else {
+        if (like == 1) {
+            return res.status(200).json({ message: "l'utilisateur a dejà liké ce post", userLike })
+        }
+    }
+    //Si l'utilisateur dislike 
+    if (like == -1) {
+        //Si il a deja un like et qu'il veut disliker alors on change la valeur dans la bdd
+        if (like != 1) {
+            await userLiked.update({ liked: req.body.liked }, { where: { liked: req.params.liked } })
+                .then((like) => res.status(201).json({like, msg: "Succes" }))
+                .catch(err => res.status(500).json({ err, msg: "Probleme avec la modification du like" }))
+    //Sinon on cree sont dislike dans la bdd
+        } if (like == null) {
+            const like = await new userLiked({
+                "userId": userId,
+                "postId": postId,
+                "liked": -1
+            }).save()
 
-    //     try {
-    //         const like = await new userLiked({
-    //             "userId": userId,
-    //             "postId": postId,
-    //             "liked": 1
-    //         }).save()
-
-    //         if (like != null) {
-    //             return res.status(201).json(like);
-    //         } 
-    //     }
-    //     catch(err) {
-    //         return res.status(500).json({err, message: "Erreur de création du like"});
-    //     }
-    // }
-    // else {
-    //     const like = await new userLiked({
-    //         "userId": userId,
-    //         "postId": postId,
-    //         "liked": 1
-    //     }).save()
-    //     return res.status(200).json({message: "l'utilisateur a dejà liké ce post", userLike});
-    // }
-//}
-
-
-
+        } else{
+            if(like == -1) {
+                return res.status(200).json({ message: "l'utilisateur a dejà disliké ce post", userLike })
+            }
+        }
+    }
+}
 
 
 
@@ -153,33 +165,51 @@ exports.deletePost = (req, res, next) => {
 //3. Enregistre le commentaire avec l'id du post 
 
 exports.createComment = (req, res, next) => {
-    
+
     let userId = req.body.userId;
-    let postId = req.params;
+    let content = req.body.content;
     console.log(userId);
-    console.log(postId);
+    console.log(content);
+    console.log(req.body);
 
-    const comment = new Commentaire ({
-        ...req.body,
-        postId: postId
-    });
-    comment.save()
-    .then(() => res.status(201).json({ msg: "Le commentaire a ete cree" }))
-    .catch(error => res.status(500).json({ error, message: "Probleme avec la creation du commentaire"}));
+    const comment = new Commentaire({
+        "userId": req.body.userId,
+        "content": req.body.content,
+        "postId": req.params.postId,
+    }).save()
+        .then(() => res.status(201).json({ msg: "Le commentaire a ete cree" }))
+        .catch(error => res.status(500).json({ error, message: "Probleme avec la creation du commentaire" }));
 };
 
 
 
-
-
-exports.readComment = (req, res, next) => {
-
+exports.readAllComment = (req, res, next) => {
+    Commentaire.findAll()
+    .then(comments => res.status(200).json(comments))
+    .catch(err => res.status(404).json({err, msg: "Not found"}))
 };
 
-exports.modifyComment = (req, res, next) => {
+exports.readOneComment = (req, res, next) => {
+    const { comId } = req.params;
+    Commentaire.findByPk(comId)
+    .then(comment => {
+        if (!comment) return res.status(404).json({msg: "Not found !"})
+        res.status(200).json(comment)})
+    .catch(err => res.status(500).json({ err }));
+};
 
+exports.modifyComment = (req, res, next) => { 
+    const commentObject = req.file ? {
+        ...json.parse(req.body.comment)
+    } : { ...req.body };
+    console.log(commentObject);
+    Commentaire.update({ ...commentObject }, { where : { comId: req.params.comId }})
+    .then(() => res.status(201).json({ msg: "Comment updated successfuly"}))
+    .catch(error => res.status(400).json({ error, msg: "Failed to update the comment"}))
 };
 
 exports.deleteComment = (req, res, next) => {
-
+    Commentaire.destroy({ where: { comId: req.params.comId }})
+    .then(() => res.status(201).json({msg: "Comment deleted"}))
+    .catch(err => res.status(500).json({err, msg: "Failed to delete the comment"}));
 };

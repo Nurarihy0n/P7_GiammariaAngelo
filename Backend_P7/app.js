@@ -8,6 +8,7 @@ require('dotenv').config();
 //connection aux routes
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
+const commentaireRoutes = require('./routes/commentaire');
 
 //plugin express-rate-limit
 const limiter = rateLimit({
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
  app.use(express.json());
  app.use('/images', express.static(path.join(__dirname, 'images')));
  app.use('/api/post', postRoutes);
+ app.use('/api/post', commentaireRoutes);
  app.use('/api/auth', userRoutes);
 
 

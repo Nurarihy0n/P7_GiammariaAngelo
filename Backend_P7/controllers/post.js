@@ -4,8 +4,6 @@ const User = require('../models/User');
 const { STATUS_CODES } = require('http');
 const { post } = require('../routes/post');
 const { title } = require('process');
-const userLiked = require('../models/userLiked');
-const Commentaire = require('../models/Commentaire');
 const { json } = require('express/lib/response');
 
 // Creation d'un post 
@@ -76,89 +74,4 @@ exports.deletePost = (req, res, next) => {
             }
         })
         .catch(err => res.status(500).json({ msg: 'erreur', err }));
-}
-
-
-
-
-/********* CRUD TERMINE *********/
-
-// ||||||||||| CONTROLLERS |||||||||||||| 
-// VVVVVVVVVVV    LIKES    VVVVVVVVVVVVVV
-
-exports.likeDislike = async (req, res, next) => {
-    
-    // 1. Si'utilisateur n'a pas encore liké le post, alors je crée un like dans la table userLiked
-
-
-    // 2. Si l'utilisateur a déjà liké le post, alors, on ne fait rien
-
-
-    // 3. Si l'utilisateur veut disliker un post, alors s'il n'a pas liké, alors je créé un dislike 
-
-
-    // 4. Si l'utilisateur veut disliker un post, et s'il a déjà liké ce post, alors son like est annulé
-
-
-    // 5. Si l'utilisateur veut disliker un post, et s'il a déjà disliké ce post, alors on ne fait rien
-
-    let userId = req.body.userId;
-    let likeOrDislike = req.body.like;
-    const { postId } = req.params;
-    console.log(userId);
-    console.log(likeOrDislike);
-    console.log(postId);
-
-    let userLike = await userLiked.findOne({ where: { userId: userId, postId: postId } });
-    // cree l'utilisateur qui like dans la bdd
-    if (likeOrDislike == 1) {
-        if (userLike == null) {
-            try {
-                const like = await new userLiked({
-                    "userId": userId,
-                    "postId": postId,
-                    "liked": 1
-                }).save()
-
-                if (like != null) {
-                    return res.status(201).json(like);
-                }
-            }
-            catch (err) {
-                return res.status(500).json({ err, message: "Erreur de création du like" });
-            }
-        }
-
-        else {
-            return res.status(200).json({ message: "l'utilisateur a dejà liké ce post", userLike })
-        }
-    }
-
-    if (likeOrDislike == -1) {
-        if (userLike == null) {
-            try {
-                const dislike = await new userLiked({
-                    "userId": userId,
-                    "postId": postId,
-                    "liked": -1
-                }).save()
-
-                if (dislike != null) {
-                    return res.status(201).json(dislike);
-                }
-            }
-            catch (err) {
-                return res.status(500).json({ err, message: "Erreur de création du like" });
-            }
-        }
-
-        else if (userLike == 1) {
-            
-        }
-
-        else {
-            return res.status(200).json({ message: "l'utilisateur a dejà disliké ce post", userLike })
-        }
-    }
-
 }

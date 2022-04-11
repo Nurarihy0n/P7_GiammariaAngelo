@@ -6,14 +6,6 @@ const { comment } = require('../routes/commentaire');
 
 exports.createComment = (req, res, next) => {
 
-    let userId = req.body.userId;
-    let content = req.body.content;
-    let {postId} = req.params;
-    console.log(userId);
-    console.log(content);
-    console.log(postId);
-    console.log(req.body);
-
     const comment = new Commentaire({
         "userId": req.body.userId,
         "content": req.body.content,

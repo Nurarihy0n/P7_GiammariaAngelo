@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const connection = require('../database/connection');
 const userLiked = require('./userLiked');
 const Commentaire = require('./Commentaire');
+const Report = require('./Report');
 
 const modelsPost = connection.define('modelsPost', {
     postId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true }, 
@@ -23,6 +24,12 @@ modelsPost.hasMany(Commentaire, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
+
+modelsPost.hasMany(Report, {
+    foreignKey: 'postId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 
 
 

@@ -19,3 +19,9 @@ exports.deleteComReport = (req, res, next) => {
     .then(() => res.status(201).json({ msg: "Report on comment has been deleted !"}))
     .catch(error => res.status(500).json({ error, msg: "Report on comment cannot be deleted !"}))
 }
+
+exports.readAllComReport = (req, res, next) => {
+    ComReport.findAll()
+    .then((comReports) => res.status(200).json(comReports))
+    .catch(error => res.status(400).json({ error, msg: 'ComReports not found !'}))
+};

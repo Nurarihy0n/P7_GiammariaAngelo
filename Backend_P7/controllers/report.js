@@ -1,5 +1,4 @@
 const Report = require('../models/Report');
-const ComReport = require('../models/ComReport');
 const { report } = require('../routes/report');
 
 exports.createReport = (req, res, next) => {
@@ -18,3 +17,8 @@ exports.deleteReport = (req, res, next) => {
     .catch(error => res.status(500).json({ error, msg: 'Report cannot be deleted !' }));
 };
 
+exports.readAllReport = (req, res, next) => {
+    Report.findAll()
+    .then((reports) => res.status(200).json(reports))
+    .catch(error => res.status(400).json({ error, msg: 'Reports not found !'}))
+}

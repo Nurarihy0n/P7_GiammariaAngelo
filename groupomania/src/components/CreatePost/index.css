@@ -1,0 +1,115 @@
+.createPost {
+    display: flex;
+    justify-content: center;
+}
+
+.inputTitle, .inputContent, .inputImage {
+    margin-top: 25px;   
+}
+
+.inputTitle, .inputContent {
+    border-radius: 10px;
+    border: 1px solid #4E5166
+}
+
+.inputTitle {
+    width: 25rem;
+    height: 20px;
+}
+
+.inputContent {
+    width: 25rem;
+    height: 9rem;
+}
+
+.ReactModal__Content{
+    position: absolute;
+    inset: 40px;
+    overflow: auto;
+    outline: none;
+    width: 45%;
+    margin: auto;
+    padding: 20px;
+}
+
+*::placeholder{
+    color: #4E5166;
+}
+
+
+/*Bouton fermeture modal*/
+.closeModalButton {
+    
+    background-color: #FFE7E7;
+    color: #D33A2C;
+    font-size: 20px;
+  
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: solid 1px #FEE0E0;
+
+  }
+  
+  .closeModalButton:active {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+  
+  .closeModalButton:hover {
+    background-color: #FFE3E3;
+    border-color: #FAA4A4;
+  }
+  
+  .closeModalButton:active:hover,
+  .closeModalButton:focus:hover,
+  .closeModalButton:focus {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+
+  /*Bouton pour ouvrir le modal*/
+
+
+  .btn-add-post {
+    background-color: #FFE7E7;
+    color: #D33A2C;
+    font-size: 35px;
+
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    border: solid 1px #FEE0E0;
+  }
+
+  .btn-add-post:active {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+  
+  .btn-add-post:hover{
+    background-color: #FFE3E3;
+    border-color: #FAA4A4;
+  }
+
+  .btn-add-post:active:hover,
+  .btn-add-post:focus:hover {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }

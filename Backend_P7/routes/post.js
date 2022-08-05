@@ -7,7 +7,7 @@ const likeCtrl = require('../controllers/like');
 const isAuthor = require('../middleware/isAuthor');
 
 
-router.post('/', auth, multer, postCtrl.createPost);
+router.post('/', /*auth,*/ multer, postCtrl.createPost);
 router.get('/', auth, postCtrl.readAllPost);
 router.get('/:postId', auth, postCtrl.readOnePost);
 router.put('/:postId', auth, isAuthor.postAuthor, multer, postCtrl.updatePost);

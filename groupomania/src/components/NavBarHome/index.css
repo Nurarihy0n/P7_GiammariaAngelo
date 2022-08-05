@@ -1,0 +1,14 @@
+.div-link{
+    display: flex;
+    justify-content: space-between;
+    background: rgb(78,81,102);
+    background: linear-gradient(90deg, rgba(78,81,102,1) 0%, rgba(253,45,1,1) 100%);
+}
+
+.imgLogo {
+    width: 80%;
+}
+
+.link-disconnect{
+    margin: auto 20px;
+}

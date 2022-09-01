@@ -12,7 +12,7 @@ exports.createPost = (req, res, next) => {
         title: req.body.title,
         content: req.body.content,
         userId: req.body.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     post.save()
         .then(() => res.status(201).json({ message: 'Post saved ! ' }))

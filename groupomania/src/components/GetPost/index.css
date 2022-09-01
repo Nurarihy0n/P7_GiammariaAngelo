@@ -1,0 +1,21 @@
+.cardPost {
+    border: 1px solid black;
+    margin: 15px;
+}
+
+.titlePostHome, .contentPostHome {
+    max-width: 20%;
+    margin: 15px;
+}
+
+img{
+    width: 100%;
+    max-width: 300px;
+}
+
+
+@media screen and (min-width: 600px){
+    img{
+        max-width: 500px;
+    }
+}

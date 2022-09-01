@@ -76,3 +76,22 @@ img {
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: #FFFFFF;
 }
+
+
+/*Media*/
+@media screen and (max-width: 600px){
+  .imgHeaderLogo{
+    width: 300px;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+
+  .connection{
+    font-size: 20px;
+  }
+
+  .button-45{
+    font-size: 20px;
+  }
+
+}

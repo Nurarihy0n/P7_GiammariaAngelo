@@ -1,104 +1,88 @@
-import React, { useState } from "react"
-import Modal from "react-modal"
-import "./index.css"
+import React, { useState, useEffect } from "react"
 import axios from "axios"
+import NavBarHome from "../NavBarHome/index"
+import "./index.css"
 
-Modal.setAppElement("#root")
-function CreatePost() {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+export default function UpdatePost() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
   const [userId, setUserId] = useState("")
+  const [postId, setPostId] = useState("")
 
-  //Envoi des fichiers formater vers le serveur
+  console.log(title)
+
   async function axiosPost() {
     const fd = new FormData()
     fd.append("image", image, image.name)
     fd.append("title", title)
     fd.append("content", content)
     fd.append("userId", userId)
-    const url = "http://localhost:3000/api/post/"
-    axios.post(url, fd).then((response) => {
-      alert("Votre post a bien ete creez !")
+    const url = `http://localhost:3000/api/post/${postId}`
+    axios.put(url, fd).then((response) => {
+      alert("Votre post a bien ete modifie !")
     })
   }
 
-  //Initialisation de l'userId
   let userIdLocalStorage = localStorage.getItem("userId")
 
-  //Bonton d'envoi vers le serveur cote client
+  useEffect(() => {
+    setTitle(localStorage.getItem("title"))
+    setContent(localStorage.getItem("content"))
+    setImage(localStorage.getItem("image"))
+    setPostId(localStorage.getItem("postId"))
+  }, [])
+
   const submitPost = (e) => {
     e.preventDefault()
     setUserId(userIdLocalStorage)
-    setModalIsOpen(false)
     axiosPost()
   }
 
   return (
-    //Initialisation du Modal
-    <div className="modalDiv">
-      <button className="btn-add-post" onClick={() => setModalIsOpen(true)}>
-        +
-      </button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          content: {
-            borderRadius: "20px",
-            border: "1px solid #4E5166",
-          },
-        }}
-      >
-        <button
-          className="closeModalButton"
-          onClick={() => setModalIsOpen(false)}
-        >
-          x
-        </button>
-        {/* Formulaire d'envoi avec titre, contenue et image */}
-        <div className="createPost">
+    <div>
+      <NavBarHome />
+      <div className="modifyCardDiv">
+        <div className="modifyPost">
           <form>
             <label>
               <input
                 className="inputTitle"
                 type="text"
                 name="title"
-                placeholder="Titre"
+                defaultValue={title}
                 onChange={(e) => {
                   setTitle(e.target.value)
                 }}
               />
               <br />
               <input
-                className="inputContent"
+                className="modifyContent"
                 type="text"
                 name="content"
-                placeholder="Votre contenue"
+                defaultValue={content}
                 onChange={(e) => {
                   setContent(e.target.value)
                 }}
               />
               <br />
               <input
-                className="inputImage"
+                className="modifyImage"
                 type="file"
                 accept="image/*"
                 name="image"
+                defaultValue={image}
                 onChange={(e) => {
                   setImage(e.target.files[0])
                 }}
               />
             </label>
             <button className="button-45" onClick={submitPost}>
-              Post
+              Modifier
             </button>
           </form>
         </div>
-      </Modal>
+      </div>
     </div>
   )
 }
-
-export default CreatePost

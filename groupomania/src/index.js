@@ -6,6 +6,7 @@ import App from './App';
 import SignUp from './pages/SignUp/index'
 import Login from './pages/Login/index'
 import Home from './pages/Home/index'
+import UpdatePost from './components/UpdatePost/index'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
     <Route path="/SignUp" element={<SignUp />} />
     <Route path="/Login" element={<Login />} />
     <Route path="/Home" element={<Home />} />
+    <Route path="/UpdatePost" element={<UpdatePost />} />
   </Routes>
   </BrowserRouter>
 );

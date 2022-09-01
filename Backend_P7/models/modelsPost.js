@@ -9,7 +9,7 @@ const modelsPost = connection.define('modelsPost', {
     userId: { type: Sequelize.INTEGER, allowNull: false},
     title: { type: Sequelize.STRING },
     content: { type: Sequelize.STRING },
-    imageUrl: { type: Sequelize.STRING},
+    image: { type: Sequelize.STRING},
     postDate: { type: Sequelize.INTEGER }
 });
 

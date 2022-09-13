@@ -1,22 +1,24 @@
 import Axios from "axios"
 import React, { useEffect, useState } from "react"
 import "./index.css"
+import "../DeletePost/index"
 import { Link } from "react-router-dom"
+import DeletePost from "../DeletePost/index"
 
-const GetPost = () => {
+export default function GetPost() {
   const [apiData, setApiData] = useState([])
 
   const url = "http://localhost:3000/api/post"
   useEffect(() => {
     Axios.get(url)
       .then((response) => {
-        console.log(response.data)
         setApiData(response.data)
       })
       .catch((err) => console.log(err))
   }, [])
 
-  const setId = (postId) => {
+  const setPostId = (postId) => {
+    console.log(postId)
     localStorage.setItem("postId", postId)
   }
 
@@ -37,12 +39,12 @@ const GetPost = () => {
             <button
               className="modifierPost"
               onClick={() => {
-                setId(data.postId)
+                setPostId(data.postId)
               }}
             >
-              <Link to="/UpdatePost">Modifier</Link>
+              <Link to="/UpdatePost/">Modifier</Link>
             </button>
-            <button className="supprimerPost">Supprimer</button>
+            <DeletePost />
             <button className="signalerPost">Signaler</button>
           </div>
         )
@@ -50,5 +52,3 @@ const GetPost = () => {
     </div>
   )
 }
-
-export default GetPost

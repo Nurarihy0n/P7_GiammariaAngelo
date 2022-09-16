@@ -4,7 +4,6 @@
 }
 
 .titlePostHome, .contentPostHome {
-    max-width: 20%;
     margin: 15px;
 }
 
@@ -13,8 +12,20 @@ img{
     max-width: 300px;
 }
 
+.divBtnUDS {
+    margin: 15px;
+}
+
+
+
 
 @media screen and (min-width: 600px){
+    
+    .cardPost {
+        max-width: 50%;
+        margin: 20px auto;
+    }
+    
     img{
         max-width: 500px;
     }

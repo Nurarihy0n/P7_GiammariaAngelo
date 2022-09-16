@@ -21,31 +21,41 @@ export default function GetPost() {
     console.log(postId)
     localStorage.setItem("postId", postId)
   }
+  const setDeletePostId = (postId) => {
+    console.log(postId)
+    localStorage.setItem("postIdDelete", postId)
+  }
 
   return (
     <div>
-      {apiData.map((data, id) => {
+      {apiData.map((data) => {
         return (
-          <div className="cardPost">
-            <h2 className="titlePostHome" key={data.id}>
-              {data.title}
-            </h2>
-            <div className="contentPostHome" key={data.id}>
-              {data.content}
-            </div>
+          <div className="cardPost" key={data.id}>
+            <h2 className="titlePostHome">{data.title}</h2>
+            <div className="contentPostHome">{data.content}</div>
             <div className="imgPostHome">
               <img src={data.image} alt={"img du post"} />
             </div>
-            <button
-              className="modifierPost"
-              onClick={() => {
-                setPostId(data.postId)
-              }}
-            >
-              <Link to="/UpdatePost/">Modifier</Link>
-            </button>
-            <DeletePost />
-            <button className="signalerPost">Signaler</button>
+            <div className="divBtnUDS">
+              <button
+                className="updateBtn"
+                onClick={() => {
+                  setPostId(data.postId)
+                }}
+              >
+                <Link to="/UpdatePost/">Modifier</Link>
+              </button>
+              <button
+                className="deleteBtn"
+                onClick={() => {
+                  setDeletePostId(data.postId)
+                }}
+              >
+                <DeletePost />
+              </button>
+
+              <button className="signalerBtn">Signaler</button>
+            </div>
           </div>
         )
       })}

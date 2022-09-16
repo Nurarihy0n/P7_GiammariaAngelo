@@ -1,9 +1,92 @@
+.modifyCardDiv{
+    display: flex;
+    justify-content:center;
+}
+
+.updateTitle, .updateContent {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: solid 1px black;
+}
+
+.updateTitle {
+    margin-top: 40px;
+    width: 85%;
+    height: 25px;
+}
+
+.updateContent{
+    width: 95%;
+    height: 200px;
+}
+
+/* css button */
+.forUpdateButton {
+    margin: 40px auto;
+    align-items: center;
+    background-color: #FFE7E7;
+    background-position: 0 0;
+    border: 1px solid #FEE0E0;
+    border-radius: 11px;
+    box-sizing: border-box;
+    color: #D33A2C;
+    cursor: pointer;
+    display: flex;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 33.4929px;
+    padding: 6px 20px;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-underline-offset: 1px;
+    transition: border .2s ease-in-out,box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    word-break: break-word;
+  }
+  
+  .forUpdateButton:active,
+  .forUpdateButton:hover,
+  .forUpdateButton:focus {
+    outline: 0;
+  }
+  
+  
+  .forUpdateButton:active {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+  
+  .forUpdateButton:hover {
+    background-color: #FFE3E3;
+    border-color: #FAA4A4;
+  }
+  
+  .forUpdateButton:active:hover,
+  .forUpdateButton:focus:hover,
+  .bforUpdateButton:focus {
+    background-color: #D33A2C;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+    color: #FFFFFF;
+  }
+
+
+/* Media Query */
+
 @media screen and (min-width: 600px){
     .modifyCardDiv{
         display: flex;
         justify-content: center;
         border: 1px solid black;
         margin: 30px auto;
-        max-width: 60%;
+        max-width: 40%;
+    }
+
+    .updateTitle, .updateContent{
+        width: 100%;
     }
 }

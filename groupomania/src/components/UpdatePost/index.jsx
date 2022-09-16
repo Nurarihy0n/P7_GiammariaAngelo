@@ -53,48 +53,46 @@ export default function UpdatePost() {
     <div>
       <NavBarHome />
       <div className="modifyCardDiv">
-        <div className="modifyPost">
-          <form>
-            <label>
-              <input
-                className="inputTitle"
-                type="text"
-                name="title"
-                defaultValue={apiDataPostId.title}
-                onChange={(e) => {
-                  setTitle(e.target.value)
-                }}
-              />
-              <br />
-              <input
-                className="modifyContent"
-                type="text"
-                name="content"
-                defaultValue={apiDataPostId.content}
-                onChange={(e) => {
-                  setContent(e.target.value)
-                }}
-              />
-              <br />
-              <div style={{ maxWidth: "300px" }}>
-                <img src={apiDataPostId.image} alt="img actuel" />
-              </div>
-              <input
-                className="modifyImage"
-                type="file"
-                accept="image/*"
-                name="image"
-                defaultValue={apiDataPostId.image}
-                onChange={(e) => {
-                  setImage(e.target.files[0])
-                }}
-              />
-            </label>
-            <button className="button-45" onClick={submitPost}>
-              Modifier
-            </button>
-          </form>
-        </div>
+        <form>
+          <label>
+            <input
+              className="updateTitle"
+              type="text"
+              name="title"
+              defaultValue={apiDataPostId.title}
+              onChange={(e) => {
+                setTitle(e.target.value)
+              }}
+            />
+            <br />
+            <input
+              className="updateContent"
+              type="text"
+              name="content"
+              defaultValue={apiDataPostId.content}
+              onChange={(e) => {
+                setContent(e.target.value)
+              }}
+            />
+            <br />
+            <div style={{ maxWidth: "300px" }}>
+              <img src={apiDataPostId.image} alt="img actuel" />
+            </div>
+            <input
+              className="modifyImage"
+              type="file"
+              accept="image/*"
+              name="image"
+              defaultValue={apiDataPostId.image}
+              onChange={(e) => {
+                setImage(e.target.files[0])
+              }}
+            />
+          </label>
+          <button className="forUpdateButton" onClick={submitPost}>
+            Modifier
+          </button>
+        </form>
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import "./index.css"
 import "../DeletePost/index"
 import { Link } from "react-router-dom"
 import DeletePost from "../DeletePost/index"
+import SignalerPost from "../SignalerPost/index"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
@@ -18,11 +19,9 @@ export default function GetPost() {
   }, [])
 
   const setPostId = (postId) => {
-    console.log(postId)
     localStorage.setItem("postId", postId)
   }
   const setDeletePostId = (postId) => {
-    console.log(postId)
     localStorage.setItem("postIdDelete", postId)
   }
 
@@ -30,7 +29,7 @@ export default function GetPost() {
     <div>
       {apiData.map((data) => {
         return (
-          <div className="cardPost" key={data.id}>
+          <div className="cardPost" key={data.postId}>
             <h2 className="titlePostHome">{data.title}</h2>
             <div className="contentPostHome">{data.content}</div>
             <div className="imgPostHome">
@@ -53,8 +52,12 @@ export default function GetPost() {
               >
                 <DeletePost />
               </button>
-
-              <button className="signalerBtn">Signaler</button>
+              <button
+                className="signalerBtn"
+                onClick={() => setPostId(data.postId)}
+              >
+                <SignalerPost />
+              </button>
             </div>
           </div>
         )

@@ -2,6 +2,8 @@ const Report = require('../models/Report');
 const { report } = require('../routes/report');
 
 exports.createReport = (req, res, next) => {
+    console.log("Avant la requete: ")
+    console.log(req.body);
     const report = new Report({
         postId : req.params.postId,
         userId : req.body.userId,

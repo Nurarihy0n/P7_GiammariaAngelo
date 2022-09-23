@@ -6,6 +6,6 @@ const reportCtrl = require('../controllers/report');
 
 // Recuperation de tous les reports pour le moderateur
 router.get('/:postId/comReport', isModerator, comReportCtrl.readAllComReport);
-router.get('/:postId/report', isModerator, reportCtrl.readAllReport);
+router.get('/report', /*isModerator,*/ reportCtrl.readAllReport);
 
 module.exports = router;

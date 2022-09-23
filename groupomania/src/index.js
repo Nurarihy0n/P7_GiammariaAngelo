@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp/index'
 import Login from './pages/Login/index'
 import Home from './pages/Home/index'
 import UpdatePost from './components/UpdatePost/index'
+import Moderator from './pages/Moderator/index'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
     <Route path="/Login" element={<Login />} />
     <Route path="/Home" element={<Home />} />
     <Route path="/UpdatePost" element={<UpdatePost />} />
+    <Route path="/Moderator" element={<Moderator />} />
   </Routes>
   </BrowserRouter>
 );

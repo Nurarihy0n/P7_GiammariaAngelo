@@ -5,6 +5,7 @@ import "../DeletePost/index"
 import { Link } from "react-router-dom"
 import DeletePost from "../DeletePost/index"
 import SignalerPost from "../SignalerPost/index"
+import { CreateComment } from "../CreateComment/index"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
@@ -58,6 +59,9 @@ export default function GetPost() {
               >
                 <SignalerPost />
               </button>
+            </div>
+            <div onClick={() => localStorage.setItem("postId", data.postId)}>
+              <CreateComment dataPostId={data.postId} />
             </div>
           </div>
         )

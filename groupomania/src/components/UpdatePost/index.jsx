@@ -12,41 +12,51 @@ export default function UpdatePost() {
 
   const url = "http://localhost:3000/api/post/"
 
-  //Je recupere la data de mon post stocker dans le localStorage
+  //Recuperation post data (localStorage)
   useEffect(() => {
     const postIdLocalStorage = localStorage.getItem("postId")
     Axios.get(url + postIdLocalStorage)
       .then((response) => {
-        setApiDataPostId(response.data)
+        let data = response.data
+
+        setApiDataPostId(data)
+        setTitle(data.title)
+        setContent(data.content)
+        setImage(data.image)
+        setUserId(data.userId)
       })
       .catch((err) => console.log(err))
   }, [])
 
+  //Requete Axios
   async function axiosPut() {
-    let config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
     const fd = new FormData()
-    fd.append("image", image, image.name)
     fd.append("title", title)
     fd.append("content", content)
     fd.append("userId", userId)
-    Axios.put(config, url + localStorage.getItem("postId"), fd).then(
-      (response) => {
-        alert("Votre post a bien ete modifie !")
-      }
-    )
+    fd.append("image", image)
+    Axios.put(url + localStorage.getItem("postId"), fd).then((response) => {
+      console.log((response) => console.log(response, "Post Updated"))
+    })
   }
 
-  let userIdLocalStorage = localStorage.getItem("userId")
+  console.log(apiDataPostId.title)
 
   const submitPost = (e) => {
     e.preventDefault()
-    setUserId(userIdLocalStorage)
     axiosPut()
+    alert("Votre post a bien ete modifie !")
+  }
+
+  //Initialisation: Champs du formulaire
+  const handleChangeTitle = (e) => {
+    setTitle(e.target.value)
+  }
+  const handleChangeContent = (e) => {
+    setContent(e.target.value)
+  }
+  const handleChangeImage = (e) => {
+    setImage(e.target.files[0])
   }
 
   return (
@@ -60,9 +70,7 @@ export default function UpdatePost() {
               type="text"
               name="title"
               defaultValue={apiDataPostId.title}
-              onChange={(e) => {
-                setTitle(e.target.value)
-              }}
+              onChange={handleChangeTitle}
             />
             <br />
             <input
@@ -70,9 +78,7 @@ export default function UpdatePost() {
               type="text"
               name="content"
               defaultValue={apiDataPostId.content}
-              onChange={(e) => {
-                setContent(e.target.value)
-              }}
+              onChange={handleChangeContent}
             />
             <br />
             <div style={{ maxWidth: "300px" }}>
@@ -84,9 +90,7 @@ export default function UpdatePost() {
               accept="image/*"
               name="image"
               defaultValue={apiDataPostId.image}
-              onChange={(e) => {
-                setImage(e.target.files[0])
-              }}
+              onChange={handleChangeImage}
             />
           </label>
           <button className="forUpdateButton" onClick={submitPost}>

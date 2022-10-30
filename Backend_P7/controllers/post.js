@@ -37,14 +37,14 @@ exports.readOnePost = (req, res, next) => {
         .catch(error => res.status(500).json({ error }))
 };
 
-// Update a post who exist
+// Update a post
 exports.updatePost = (req, res, next) => {
     const postObject = req.file ?
-        {
-            ...JSON.parse(req.body.post),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        {   
+            ...req.body,
+            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
-    console.log(req.body);
+        console.log(req.body)
     Post.update({ ...postObject }, { where: { postId: req.params.postId } })
         .then(() => res.status(201).json({ message: 'Post successfuly updated !' }))
         .catch(err => res.status(400).json({ err, message: 'Something wrong with modification !' }));

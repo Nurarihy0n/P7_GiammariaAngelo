@@ -1,41 +1,52 @@
 import React from "react"
-// import Axios from "axios"
+import Axios from "axios"
 
 export class CreateComment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userID: "",
+      userId: "",
       content: "",
       postIdData: this.props,
     }
   }
-
-  handlerContent = (e) => {
-    this.setState = { content: e.target.value }
+  // Envoi data vers serveurs
+  axiosPostComment = () => {
+    const postId = localStorage.getItem("postId")
+    const url = `http://localhost:3000/api/post/${postId}/comment`
+    Axios.post(url, {
+      userId: localStorage.getItem("userId"),
+      content: this.setState.content,
+    }).then((response) => console.log(response))
   }
 
-  getPostIdData = (e) => {
+  //Initialisation du content
+  handlerContent = (e) => {
+    this.setState = { content: e.target.value }
+    console.log(this.setState)
+  }
+
+  submitBtn = (e) => {
     e.preventDefault()
-    console.log(this.postIdData)
+    this.axiosPostComment()
   }
 
   render() {
     return (
       <div>
         <div className="CreateCommentSection">
-          <form>
+          <form onSubmit={this.submitBtn}>
             <label>
               <input
                 className="InputComment"
                 type="text"
                 name="comment"
                 placeholder="Ici votre commentaire"
-                value={this.state.content}
+                value={this.state.content.id}
                 onChange={this.handlerContent}
               />
+              <button>Commenter</button>
             </label>
-            <button onChange={this.getPostIdData}>Commenter</button>
           </form>
         </div>
       </div>

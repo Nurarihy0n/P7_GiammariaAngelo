@@ -6,10 +6,12 @@ import { Link } from "react-router-dom"
 import DeletePost from "../DeletePost/index"
 import SignalerPost from "../SignalerPost/index"
 import { CreateComment } from "../CreateComment/index"
+import ReadComment from "../ReadComment/index"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
 
+  //Requete pour recuperation data post
   const url = "http://localhost:3000/api/post"
   useEffect(() => {
     Axios.get(url)
@@ -62,6 +64,9 @@ export default function GetPost() {
             </div>
             <div onClick={() => localStorage.setItem("postId", data.postId)}>
               <CreateComment dataPostId={data.postId} />
+            </div>
+            <div>
+              <ReadComment dataPostId={data.postId} />
             </div>
           </div>
         )

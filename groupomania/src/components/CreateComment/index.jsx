@@ -53,31 +53,3 @@ export class CreateComment extends React.Component {
     )
   }
 }
-
-// const [content, setContent] = useState("")
-// const [userId, setUserId] = useState("")
-// const [postId, setPostId] = useState("")
-
-// async function sendDataComment() {
-//   const fd = new FormData()
-//   fd.append("content", content)
-//   fd.append("userId", userId)
-//   console.log(fd)
-//   Axios.post(`http://localhost:3000/api/${postId}/comment`, fd)
-//     .then((response) => console.log(response))
-//     .catch((err) => console.log(err))
-// }
-// function getPostIdData() {
-//   Axios.get("http://localhost:3000/api/post").then((response) => {
-//     let data = response.data.postId
-//     console.log(data)
-//     submitComment()
-//   })
-// }
-
-// const submitComment = (e) => {
-//   e.preventDefault()
-//   setUserId(localStorage.getItem("userId"))
-//   setPostId(localStorage.getItem("postId"))
-//   sendDataComment()
-// }

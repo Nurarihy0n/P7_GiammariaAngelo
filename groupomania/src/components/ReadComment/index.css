@@ -1,0 +1,6 @@
+.container_modifiaction_comment {
+    display: flex;
+}
+.modify_btn, .delete_btn{
+    margin-left: 2px;
+}

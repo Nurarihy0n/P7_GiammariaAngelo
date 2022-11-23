@@ -3,6 +3,7 @@ const post = require('../models/modelsPost');
 const User = require('../models/User');
 const { STATUS_CODES } = require('http');
 const { comment } = require('../routes/commentaire');
+const { response } = require('express');
 
 exports.createComment = (req, res, next) => {
 
@@ -21,6 +22,15 @@ exports.readAllComment = (req, res, next) => {
     .then(comments => res.status(200).json(comments))
     .catch(err => res.status(404).json({err, msg: "Not found"}))
 };
+
+// exports.readAllComment = (req, res, next) => {
+//     const { postId } = req.params;
+//     Commentaire.findByPk(postId)
+//     .then(postComment => {
+//         if(!postComment) return res.status(404).json({msg: "Not found !"})
+//         res.status(200).json(postComment)})
+//     .catch(err => res.status(500).json({ err }));
+// }
 
 exports.readOneComment = (req, res, next) => {
     const { comId } = req.params;

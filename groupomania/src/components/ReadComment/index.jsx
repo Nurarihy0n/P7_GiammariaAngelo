@@ -1,7 +1,7 @@
 import Axios from "axios"
 import React, { useEffect, useState } from "react"
 import "./index.css"
-// import ModifyComment from "../UpdateComment/index"
+import ModifyComment from "../UpdateComment/index"
 import DeleteComment from "../DeleteComment/index"
 
 export default function ReadComment(props) {
@@ -27,9 +27,9 @@ export default function ReadComment(props) {
               {data.content}
             </div>
             <div className="container_modifiaction_comment">
-              {/* <div className="modify_btn">
-                <ModifyComment />
-        </div>*/}
+              <div className="modify_btn">
+                <ModifyComment postId={data.postId} commentId={data.comId} />
+              </div>
               <div className="delete_btn">
                 <DeleteComment
                   postIdComment={data.postId}

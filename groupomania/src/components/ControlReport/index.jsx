@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import Axios from "axios"
 
 export default function ControlReport() {
-  const urlReportBDD = "http://localhost/3000/api/post/report"
+  const urlReportBDD = "http://localhost:3000/api/post/report"
   useEffect(() => {
     Axios.get(urlReportBDD).then((response) => console.log(response))
   }, [])

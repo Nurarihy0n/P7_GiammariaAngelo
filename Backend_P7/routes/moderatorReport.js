@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isModerator = require('../middleware/isModerator');
+const isModerator = require('../middleware/isAuthor');
 const comReportCtrl = require('../controllers/comReport');
 const reportCtrl = require('../controllers/report');
 

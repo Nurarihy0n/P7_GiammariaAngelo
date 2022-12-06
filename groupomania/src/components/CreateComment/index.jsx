@@ -23,7 +23,6 @@ export class CreateComment extends React.Component {
   //Initialisation du content
   handlerContent = (e) => {
     this.setState = { content: e.target.value }
-    console.log(this.setState)
   }
 
   submitBtn = (e) => {

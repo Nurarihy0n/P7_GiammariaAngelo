@@ -36,11 +36,9 @@ export default function UpdatePost() {
     fd.append("userId", userId)
     fd.append("image", image)
     Axios.put(url + localStorage.getItem("postId"), fd).then((response) => {
-      console.log((response) => console.log(response, "Post Updated"))
+      console.log(response, "Post Updated")
     })
   }
-
-  console.log(apiDataPostId.title)
 
   const submitPost = (e) => {
     e.preventDefault()

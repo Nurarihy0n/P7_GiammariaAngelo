@@ -59,7 +59,7 @@ export default function GetPost() {
                 className="signalerBtn"
                 onClick={() => setPostId(data.postId)}
               >
-                <SignalerPost />
+                <SignalerPost postId={data.postId} />
               </button>
             </div>
             <div onClick={() => localStorage.setItem("postId", data.postId)}>

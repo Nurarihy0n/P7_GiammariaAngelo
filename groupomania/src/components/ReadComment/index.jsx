@@ -9,7 +9,6 @@ export default function ReadComment(props) {
 
   //Recuperation data des commentaires
   useEffect(() => {
-    console.log(props.dataPostId)
     const url = `http://localhost:3000/api/post/${props.dataPostId}/comment`
     Axios.get(url)
       .then((response) => {
@@ -23,13 +22,17 @@ export default function ReadComment(props) {
       {dataComment.map((data) => {
         return (
           <div>
-            <div className="commentSection" key={data.comId}>
+            <div
+              id="divToTransform"
+              className="commentSection"
+              key={data.comId}
+            >
               {data.content}
             </div>
             <div className="container_modifiaction_comment">
-              <div className="modify_btn">
+              <button className="modify_btn">
                 <ModifyComment postId={data.postId} commentId={data.comId} />
-              </div>
+              </button>
               <div className="delete_btn">
                 <DeleteComment
                   postIdComment={data.postId}

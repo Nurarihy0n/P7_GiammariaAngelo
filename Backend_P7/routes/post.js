@@ -14,6 +14,6 @@ router.put('/:postId', /*auth, isAuthor.postAuthor,*/ multer, postCtrl.updatePos
 router.delete('/:postId', /*auth,*/ /*isAuthor.postAuthor,*/ postCtrl.deletePost);
 
 //routes pour les like et dislike
-router.post('/:postId/like', auth, likeCtrl.likeDislike);
+router.post('/:postId/like', /*auth,*/ likeCtrl.likeDislike);
 
 module.exports = router

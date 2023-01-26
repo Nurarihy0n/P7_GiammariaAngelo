@@ -14,6 +14,8 @@ const User = connection.define('User',{
     moderateur: { type: Sequelize.BOOLEAN, defaultValue: false}
 });
 
+
+
 User.hasMany(modelsPost, {
     foreignKey: 'userId' 
 });

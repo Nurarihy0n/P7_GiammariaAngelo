@@ -16,13 +16,6 @@ exports.createComment = (req, res, next) => {
         .catch(error => res.status(500).json({ error, message: "Probleme avec la creation du commentaire" }));
 };
 
-
-// exports.readAllComment = (req, res, next) => {
-//     Commentaire.findAll()
-//     .then(comments => res.status(200).json(comments))
-//     .catch(err => res.status(404).json({err, msg: "Not found"}))
-// };
-
 exports.readAllComment = (req, res, next) => {
     const { postId } = req.params;
     Commentaire.findAll({ where: {postId : postId} })

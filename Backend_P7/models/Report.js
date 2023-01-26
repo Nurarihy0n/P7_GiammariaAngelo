@@ -5,7 +5,9 @@ const Report = connection.define('Report', {
     reportId : {type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},
     postId: { type: Sequelize.INTEGER, allowNull: false, unique: 'composite_key'},
     userId: { type: Sequelize.INTEGER, allowNull: false, unique: 'composite_key'},
-    content: { type: Sequelize.STRING }
+    content: { type: Sequelize.STRING },
+    titlePostReport: { type: Sequelize.STRING },
+    contentPostReport : { type: Sequelize.STRING },
 });
 
 

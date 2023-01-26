@@ -7,6 +7,7 @@ import DeletePost from "../DeletePost/index"
 import SignalerPost from "../SignalerPost/index"
 import { CreateComment } from "../CreateComment/index"
 import ReadComment from "../ReadComment/index"
+// import likeDislike from "../LikeDislike/likeDislike"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
@@ -61,6 +62,9 @@ export default function GetPost() {
               >
                 <SignalerPost postId={data.postId} />
               </button>
+              {/* <button>
+                <likeDislike postId={data.postId} />
+              </button> */}
             </div>
             <div onClick={() => localStorage.setItem("postId", data.postId)}>
               <CreateComment dataPostId={data.postId} />

@@ -1,11 +1,12 @@
+
 const userLiked = require('../models/userLiked');
-const { like } = require('../routes/post');
 
 exports.likeDislike = async (req, res, next) => {
 
     let userId = req.body.userId;
-    let likeOrDislike = req.body.like;
-    const { postId } = req.params;
+    let likeOrDislike = req.body.liked;
+    let { postId } = req.params;
+    postId = parseInt(postId)
 
     let userLike = await userLiked.findOne({ where: { userId: userId, postId: postId } });
     // cree l'utilisateur qui like dans la bdd

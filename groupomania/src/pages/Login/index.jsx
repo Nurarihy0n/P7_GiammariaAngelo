@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { /*useEffect,*/ useState } from "react"
 import HeaderLogo from "../../components/HeaderLogo/index"
 import NavBarConnection from "../../components/NavBarConnection/index"
 import Axios from "axios"
@@ -9,19 +9,19 @@ function Login() {
 
   async function axiosPost() {
     const url = "http://localhost:3000/api/auth/login/"
-    Axios.post(url, { email: userEmail, password: userPassword }).then(
-      (response) => {
+    Axios.post(url, { email: userEmail, password: userPassword })
+      .then((response) => {
         const accesToken = response.data.token
         const userId = response.data.userId
         localStorage.setItem("accesToken", accesToken)
         localStorage.setItem("userId", userId)
-      }
-    )
+      })
+      .catch((err) => console.log(err, "err login page"))
   }
 
-  useEffect(() => {
-    axiosPost()
-  })
+  // useEffect(() => {
+  //   axiosPost()
+  // })
 
   const handleFormSub = (e) => {
     e.preventDefault()

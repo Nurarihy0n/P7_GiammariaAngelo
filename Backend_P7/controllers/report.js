@@ -2,12 +2,13 @@ const Report = require('../models/Report');
 const { report } = require('../routes/report');
 
 exports.createReport = (req, res, next) => {
-    console.log("Avant la requete: ")
-    console.log(req.body);
     const report = new Report({
         postId : req.params.postId,
         userId : req.body.userId,
-        content : req.body.content
+        content : req.body.content,
+        titlePostReport: req.params.title,
+        contentPostReport : req.params.content
+          
     }).save()
         .then(() => res.status(201).json({ msg: "This post has been reported !"}))
         .catch(error => res.status(500).json({ error, msg: "This post cannot be reported !"}));

@@ -23,7 +23,7 @@ exports.createPost = (req, res, next) => {
 exports.readAllPost = (req, res, next) => {
     Post.findAll()
         .then((posts) => res.status(200).json(posts))
-        .catch(error => res.status(400).json({ error, message: 'Post not found !' }));
+        .catch(error => res.status(400).json({ error, message: 'All post cannot be found !' }));
 };
 
 // Read only one post
@@ -31,7 +31,7 @@ exports.readOnePost = (req, res, next) => {
     const { postId } = req.params;
     Post.findByPk(postId)
         .then(post => {
-            if (!post) return res.status(404).json({ message: "Not found !" })
+            if (!post) return res.status(404).json({ message: "Post Not found !" })
             res.status('200').json(post)
         })
         .catch(error => res.status(500).json({ error }))

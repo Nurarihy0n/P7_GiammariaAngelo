@@ -9,7 +9,6 @@ function CreatePost() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
-  const [userId, setUserId] = useState("")
 
   //Envoi des fichiers formater vers le serveur
   async function axiosPost() {
@@ -17,20 +16,22 @@ function CreatePost() {
     fd.append("image", image, image.name)
     fd.append("title", title)
     fd.append("content", content)
-    fd.append("userId", userId)
+    fd.append("userId", localStorage.getItem("userId"))
     const url = "http://localhost:3000/api/post/"
-    axios.post(url, fd).then(() => {
-      alert("Votre post a bien ete creez !")
-    })
+    axios
+      .post(url, fd)
+      .then(() => {
+        alert("Votre post a bien ete creez !")
+        window.location.reload()
+      })
+      .catch((err) =>
+        console.log(err, "Err lors de la creation d'un post sur react")
+      )
   }
-
-  //Initialisation de l'userId
-  let userIdLocalStorage = localStorage.getItem("userId")
 
   //Bonton d'envoi vers le serveur cote client
   const submitPost = (e) => {
     e.preventDefault()
-    setUserId(userIdLocalStorage)
     setModalIsOpen(false)
     axiosPost()
   }

@@ -3,9 +3,10 @@ const connection = require('../database/connection');
 const userLiked = require('./userLiked');
 const Commentaire = require('./Commentaire');
 const Report = require('./Report');
+const User = require('./User')
 
 const modelsPost = connection.define('modelsPost', {
-    postId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true }, 
+    postId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true, }, 
     userId: { type: Sequelize.INTEGER, allowNull: false},
     title: { type: Sequelize.STRING },
     content: { type: Sequelize.STRING },
@@ -30,6 +31,8 @@ modelsPost.hasMany(Report, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 })
+
+modelsPost.belongsTo(User, { foreignKey: "userId"});
 
 
 

@@ -3,6 +3,7 @@ const connection = require('../database/connection');
 const modelsPost = require('./modelsPost');
 const Commentaire = require('./Commentaire');
 const userLiked = require('./userLiked');
+const Report = require('./Report');
 
 const User = connection.define('User',{
     userId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},
@@ -26,6 +27,10 @@ User.hasMany(Commentaire, {
 
 User.hasMany(userLiked, {
     foreignKey: 'userId' 
+});
+
+User.hasMany(Report, {
+    foreignKey: 'userId'
 });
 
 

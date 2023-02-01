@@ -21,7 +21,7 @@ exports.createPost = (req, res, next) => {
 
 //Read all post
 exports.readAllPost = (req, res, next) => {
-    Post.findAll()
+    Post.findAll({ include: User })
         .then((posts) => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error, message: 'All post cannot be found !' }));
 };
@@ -32,7 +32,7 @@ exports.readOnePost = (req, res, next) => {
     Post.findByPk(postId)
         .then(post => {
             if (!post) return res.status(404).json({ message: "Post Not found !" })
-            res.status('200').json(post)
+            res.status(200).json(post)
         })
         .catch(error => res.status(500).json({ error }))
 };

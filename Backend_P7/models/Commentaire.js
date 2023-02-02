@@ -10,16 +10,16 @@ const Commentaire = connection.define('Commentaire', {
     userId: { type: Sequelize.INTEGER,}
 });
 
-Commentaire.hasMany(Like, {
-    foreignKey: 'postId',
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
-});
+// Commentaire.hasMany(Like, {
+//     foreignKey: 'postId',
+//     onDelete: 'CASCADE',
+//     onUpdate: 'CASCADE'
+// });
 
-Commentaire.hasMany(ComReport, {
-    foreignKey: 'comId',
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
-});
+// Commentaire.hasMany(ComReport, {
+//     foreignKey: 'comId',
+//     onDelete: 'CASCADE',
+//     onUpdate: 'CASCADE'
+// });
 
 module.exports = Commentaire;

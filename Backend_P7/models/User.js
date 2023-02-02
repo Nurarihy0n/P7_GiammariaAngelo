@@ -34,6 +34,4 @@ User.hasMany(Report, {
 });
 
 
-
-
 module.exports = User;

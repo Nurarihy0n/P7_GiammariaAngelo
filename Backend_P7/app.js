@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const commentaireRoutes = require('./routes/commentaire');
 const reportRoutes = require('./routes/report');
-const comReportRoutes = require('./routes/comReport');
+// const comReportRoutes = require('./routes/comReport');
 const moderatorReportControl = require('./routes/moderatorReport')
 
 //plugin express-rate-limit
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
  app.use('/api/post', postRoutes);
  app.use('/api/post', commentaireRoutes);
  app.use('/api/post', reportRoutes);
- app.use('/api/post', comReportRoutes);
+//  app.use('/api/post', comReportRoutes);
  app.use('/api/post', moderatorReportControl); 
  app.use('/api/auth', userRoutes);
 

@@ -13,6 +13,5 @@ const Report = connection.define('Report', {
     }}
 });
 
-//Report.belongsTo(User);
 
 module.exports = Report;

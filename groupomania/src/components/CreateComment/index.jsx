@@ -10,14 +10,22 @@ export class CreateComment extends React.Component {
       postIdData: this.props,
     }
   }
+
   // Envoi data vers serveurs
   axiosPostComment = () => {
+    //Authorisation
+    //let accesToken = localStorage.getItem("accesToken")
+    // let config = {
+    //   headers: {
+    //     Authorization: `Bearer ${accesToken}`,
+    //   },
+    // }
     const postId = localStorage.getItem("postId")
     const url = `http://localhost:3000/api/post/${postId}/comment`
     Axios.post(url, {
       userId: localStorage.getItem("userId"),
       content: this.setState.content,
-    }).then((response) => console.log(response))
+    }).then(() => window.location.reload())
   }
 
   //Initialisation du content

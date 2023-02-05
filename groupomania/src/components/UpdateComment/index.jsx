@@ -10,9 +10,17 @@ export default function UpdateComment(props) {
 
   const url = `http://localhost:3000/api/post/${props.postId}/comment/${props.commentId}`
 
+  //Authorisation
+  let accesToken = localStorage.getItem("accesToken")
+  let config = {
+    headers: {
+      Authorization: `Bearer ${accesToken}`,
+    },
+  }
+
   // //Recuperation data commentaires
   useEffect(() => {
-    Axios.get(url)
+    Axios.get(url, config)
       .then((response) => {
         let data = response.data
         setDataComment(data)

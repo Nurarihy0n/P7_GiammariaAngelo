@@ -9,8 +9,16 @@ export default function DeletePost() {
 
   const url = "http://localhost:3000/api/post/"
 
+  //Authorisation
+  let accesToken = localStorage.getItem("accesToken")
+  let config = {
+    headers: {
+      Authorization: `Bearer ${accesToken}`,
+    },
+  }
+
   function deletePost() {
-    Axios.delete(url + localStorage.getItem("postIdDelete"))
+    Axios.delete(url + localStorage.getItem("postIdDelete"), config)
       .then((response) => console.log(response, "Post Supprime"))
       .catch((err) => console.log(err, "Delete post failed"))
   }

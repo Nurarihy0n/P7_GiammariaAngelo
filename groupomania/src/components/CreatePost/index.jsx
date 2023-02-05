@@ -10,6 +10,14 @@ function CreatePost() {
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
 
+  //Authorisation
+  let accesToken = localStorage.getItem("accesToken")
+  let config = {
+    headers: {
+      Authorization: `Bearer ${accesToken}`,
+    },
+  }
+
   //Envoi des fichiers formater vers le serveur
   async function axiosPost() {
     const fd = new FormData()
@@ -19,7 +27,7 @@ function CreatePost() {
     fd.append("userId", localStorage.getItem("userId"))
     const url = "http://localhost:3000/api/post/"
     axios
-      .post(url, fd)
+      .post(url, fd, config)
       .then(() => {
         alert("Votre post a bien ete creez !")
         window.location.reload()

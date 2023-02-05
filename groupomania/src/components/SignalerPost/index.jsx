@@ -28,7 +28,7 @@ export default function SignalerPost(props) {
   return (
     <div>
       <div className="reportContent" onClick={() => setModalIsOpen(true)}>
-        Signaler
+        ⚠️
       </div>
       <Modal
         isOpen={modalIsOpen}

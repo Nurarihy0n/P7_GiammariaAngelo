@@ -7,10 +7,18 @@ import DeleteComment from "../DeleteComment/index"
 export default function ReadComment(props) {
   const [dataComment, setDataComment] = useState([])
 
+  //Authorisation
+  let accesToken = localStorage.getItem("accesToken")
+  let config = {
+    headers: {
+      Authorization: `Bearer ${accesToken}`,
+    },
+  }
+
   //Recuperation data des commentaires
   useEffect(() => {
     const url = `http://localhost:3000/api/post/${props.dataPostId}/comment`
-    Axios.get(url)
+    Axios.get(url, config)
       .then((response) => {
         setDataComment(response.data)
       })
@@ -21,12 +29,8 @@ export default function ReadComment(props) {
     <div>
       {dataComment.map((data) => {
         return (
-          <div>
-            <div
-              id="divToTransform"
-              className="commentSection"
-              key={data.comId}
-            >
+          <div key={data.comId}>
+            <div id="divToTransform" className="commentSection">
               {data.content}
             </div>
             <div className="container_modifiaction_comment">

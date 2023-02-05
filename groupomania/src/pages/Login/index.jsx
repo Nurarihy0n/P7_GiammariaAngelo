@@ -1,11 +1,13 @@
-import React, { /*useEffect,*/ useState } from "react"
+import React, { useState } from "react"
 import HeaderLogo from "../../components/HeaderLogo/index"
 import NavBarConnection from "../../components/NavBarConnection/index"
 import Axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
+  const navigate = useNavigate()
 
   async function axiosPost() {
     const url = "http://localhost:3000/api/auth/login/"
@@ -15,13 +17,10 @@ function Login() {
         const userId = response.data.userId
         localStorage.setItem("accesToken", accesToken)
         localStorage.setItem("userId", userId)
+        return navigate("/Home")
       })
-      .catch((err) => console.log(err, "err login page"))
+      .catch((err) => console.log(err, "err login page" + userEmail))
   }
-
-  // useEffect(() => {
-  //   axiosPost()
-  // })
 
   const handleFormSub = (e) => {
     e.preventDefault()

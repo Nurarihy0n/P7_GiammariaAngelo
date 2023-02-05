@@ -1,14 +1,17 @@
-import { useNavigate } from "react-router-dom"
+import React from "react"
+import { Navigate } from "react-router-dom"
 
-const useAuth = () => {
-  const navigate = useNavigate()
+const PrivateRoute = ({ children }) => {
+  let isAuthenticated = false
+  let token = localStorage.getItem("accesToken")
 
-  const user = localStorage.getItem("Token")
-  if (user) {
-    navigate("/Home")
+  if (token) {
+    isAuthenticated = true
   } else {
-    navigate("/Login")
+    alert("Vous n'etes pas connecte au site. Veuillez d'abord vous connecter !")
   }
+
+  return isAuthenticated ? children : <Navigate to="/Login" />
 }
 
-export default useAuth
+export default PrivateRoute

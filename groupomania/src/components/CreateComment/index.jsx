@@ -1,5 +1,6 @@
 import React from "react"
 import Axios from "axios"
+import "./index.css"
 
 export class CreateComment extends React.Component {
   constructor(props) {
@@ -13,8 +14,13 @@ export class CreateComment extends React.Component {
 
   // Envoi data vers serveurs
   axiosPostComment = () => {
+    //Authorisation 2.0
+    // let accesToken = localStorage.getItem("accesToken")
+    // const headers = {
+    //   Authorization: `Bearer ${accesToken}`,
+    // }
     //Authorisation
-    //let accesToken = localStorage.getItem("accesToken")
+
     // let config = {
     //   headers: {
     //     Authorization: `Bearer ${accesToken}`,
@@ -22,10 +28,18 @@ export class CreateComment extends React.Component {
     // }
     const postId = localStorage.getItem("postId")
     const url = `http://localhost:3000/api/post/${postId}/comment`
-    Axios.post(url, {
-      userId: localStorage.getItem("userId"),
-      content: this.setState.content,
-    }).then(() => window.location.reload())
+    Axios.post(
+      url,
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${accesToken}`,
+      //   },
+      // },
+      {
+        userId: localStorage.getItem("userId"),
+        content: this.setState.content,
+      }
+    ).then(() => window.location.reload())
   }
 
   //Initialisation du content

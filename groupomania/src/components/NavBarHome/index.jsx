@@ -4,17 +4,19 @@ import logoHome from "../../assets/icon-left-font-monochrome-white.svg"
 import "./index.css"
 import { IoIosLogOut } from "react-icons/io"
 
-const NavBarHome = () => {
+export default function NavBarHome() {
+  const clearLocalStorage = () => {
+    localStorage.clear()
+  }
+
   return (
     <div className="div-link">
       <Link className="link-img-logo" to="/Home">
         <img className="imgLogo" src={logoHome} alt="groupomania_logo" />
       </Link>
-      <Link className="link-disconnect" to="/">
+      <Link onClick={clearLocalStorage} className="link-disconnect" to="/Login">
         <IoIosLogOut />
       </Link>
     </div>
   )
 }
-
-export default NavBarHome

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Axios from "axios"
 import Modal from "react-modal"
+import "./index.css"
 
 Modal.setAppElement("#root")
 export default function UpdateComment(props) {

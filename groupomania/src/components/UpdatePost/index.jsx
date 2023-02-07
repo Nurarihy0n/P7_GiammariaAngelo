@@ -12,21 +12,16 @@ export default function UpdatePost() {
 
   const url = "http://localhost:3000/api/post/"
 
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   //Recuperation post data (localStorage)
   useEffect(() => {
     const postIdLocalStorage = localStorage.getItem("postId")
-    Axios.get(url + postIdLocalStorage, config)
+    Axios.get(url + postIdLocalStorage, {
+      headers: {
+        Authorization: localStorage.getItem("accesToken"),
+      },
+    })
       .then((response) => {
         let data = response.data
-
         setApiDataPostId(data)
         setTitle(data.title)
         setContent(data.content)

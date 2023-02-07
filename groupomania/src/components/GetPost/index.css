@@ -13,10 +13,22 @@ img{
 }
 
 .divBtnUDS {
+    margin: 5px auto;
+    display: -webkit-box;
+}
+
+.deleteBtn, .updateBtn, .signalerBtn {
+    border: none;
+    background-color: white;
+}
+
+.readCommentContainer{
     margin: 15px;
 }
 
-
+.createCommentContainer{
+    margin-left: 10px;
+}
 
 
 @media screen and (min-width: 600px){

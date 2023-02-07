@@ -7,23 +7,15 @@ import DeletePost from "../DeletePost/index"
 import SignalerPost from "../SignalerPost/index"
 import { CreateComment } from "../CreateComment/index"
 import ReadComment from "../ReadComment/index"
-import { LikeDislike } from "../LikeDislike/index"
+import LikeDislike from "../LikeDislike"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
 
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   //Requete pour recuperation data post
   const url = "http://localhost:3000/api/post"
   useEffect(() => {
-    Axios.get(url, config)
+    Axios.get(url)
       .then((response) => {
         setApiData(response.data)
       })
@@ -61,6 +53,7 @@ export default function GetPost() {
                   Modifier
                 </Link>
               </button>
+              <div> | </div>
               <button
                 className="deleteBtn"
                 onClick={() => {
@@ -69,6 +62,7 @@ export default function GetPost() {
               >
                 <DeletePost />
               </button>
+              <div> | </div>
               <button
                 className="signalerBtn"
                 onClick={() => setPostId(data.postId)}
@@ -79,10 +73,13 @@ export default function GetPost() {
                 <LikeDislike postId={data.postId} />
               </div>
             </div>
-            <div onClick={() => localStorage.setItem("postId", data.postId)}>
+            <div
+              className="CreateCommentContainer"
+              onClick={() => localStorage.setItem("postId", data.postId)}
+            >
               <CreateComment dataPostId={data.postId} />
             </div>
-            <div>
+            <div className="readCommentContainer">
               <ReadComment dataPostId={data.postId} />
             </div>
           </div>

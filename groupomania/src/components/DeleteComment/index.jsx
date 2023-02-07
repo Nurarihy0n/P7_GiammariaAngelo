@@ -1,4 +1,5 @@
 import Axios from "axios"
+import "./index.css"
 
 export default function DeleteComment(props) {
   const url = `http://localhost:3000/api/post/${props.postIdComment}/comment/${props.commentId}`

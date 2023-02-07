@@ -79,7 +79,11 @@ exports.likeDislike = async (req, res, next) => {
 }
 
 exports.getLikeDislike = async (req, res, next) => {
-    userLiked.findAll()
-    .then(likeDislike => res.status(200).json({likeDislike}))
+    const { postId } = req.params;
+    userLiked.findAll({ where: { postId: postId }})
+    .then(postLike => {
+        if(!postLike) return res.status(404).json({msg: "Like/Dislike not found !"})
+        res.status(200).json(postLike)
+    })
     .catch(err => res.status(500).json({err, msg: "Erreur lors de la recuperation de like en bdd"}))
 }

@@ -1,9 +1,5 @@
-/* .ReactModal__Content{
-    position: absolute;
-    inset: 40px;
-    overflow: auto;
-    outline: none;
-    width: 45%;
-    margin: auto;
-    padding: 20px;
-} */
+.supprimerPost{
+    border: none;
+    background-color: white;
+    color: black;
+}

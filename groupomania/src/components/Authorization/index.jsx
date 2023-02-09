@@ -1,14 +1,14 @@
-const CheckAuth = ({ children }) => {
-  let ifAuth = false
-  let token = localStorage.getItem("accesToken")
+const Axios = require("axios")
 
-  if (token) {
-    ifAuth = true
-  } else {
-    console.log("Attention, on touche pas au affaires des autres !")
-  }
+const accesToken = localStorage.getItem("accesToken")
 
-  return ifAuth ? children : alert("HoldUp, on touche rien")
-}
+const authAxios = Axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-type": "application/json",
+    "Accept": "application/json",
+    "Authorization": `Bearer ${accesToken} `,
+  },
+})
 
-export default CheckAuth
+export default authAxios

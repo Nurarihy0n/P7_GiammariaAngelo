@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Axios from "axios"
+import authAxios from "../Authorization"
 import NavBarHome from "../NavBarHome/index"
 import "./index.css"
 
@@ -15,11 +15,8 @@ export default function UpdatePost() {
   //Recuperation post data (localStorage)
   useEffect(() => {
     const postIdLocalStorage = localStorage.getItem("postId")
-    Axios.get(url + postIdLocalStorage, {
-      headers: {
-        Authorization: localStorage.getItem("accesToken"),
-      },
-    })
+    authAxios
+      .get("/post/" + postIdLocalStorage)
       .then((response) => {
         let data = response.data
         setApiDataPostId(data)
@@ -38,9 +35,11 @@ export default function UpdatePost() {
     fd.append("content", content)
     fd.append("userId", userId)
     fd.append("image", image)
-    Axios.put(url + localStorage.getItem("postId"), fd).then((response) => {
-      console.log(response, "Post Updated")
-    })
+    authAxios
+      .put("/post/" + localStorage.getItem("postId"), fd)
+      .then((response) => {
+        console.log(response, "Post Updated")
+      })
   }
 
   const submitPost = (e) => {

@@ -31,9 +31,6 @@ exports.login = (req, res, next) => {
         if(!user) {
             return res.status(401).json({ error: 'User not find !'});
         }
-        console.log(req.body.email)
-        console.log(req.body.password);
-        console.log(user);
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
             if(!valid) {
@@ -44,7 +41,7 @@ exports.login = (req, res, next) => {
                 token: jwt.sign(
                     { userId: user.userId },
                     process.env.DB_TOKEN,
-                    { expiresIn: '24h' }
+                    { expiresIn: '20d' }
                 )
             });
         })

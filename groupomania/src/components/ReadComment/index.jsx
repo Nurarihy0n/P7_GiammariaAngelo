@@ -1,4 +1,4 @@
-import Axios from "axios"
+import authAxios from "../Authorization/index"
 import React, { useEffect, useState } from "react"
 import "./index.css"
 import ModifyComment from "../UpdateComment/index"
@@ -7,18 +7,10 @@ import DeleteComment from "../DeleteComment/index"
 export default function ReadComment(props) {
   const [dataComment, setDataComment] = useState([])
 
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   //Recuperation data des commentaires
   useEffect(() => {
-    const url = `http://localhost:3000/api/post/${props.dataPostId}/comment`
-    Axios.get(url, config)
+    authAxios
+      .get(`/post/${props.dataPostId}/comment`)
       .then((response) => {
         setDataComment(response.data)
       })

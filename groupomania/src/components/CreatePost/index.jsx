@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
 import "./index.css"
-import axios from "axios"
+import authAxios from "../Authorization/index"
 
 Modal.setAppElement("#root")
 function CreatePost() {
@@ -10,14 +10,6 @@ function CreatePost() {
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
 
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   //Envoi des fichiers formater vers le serveur
   async function axiosPost() {
     const fd = new FormData()
@@ -25,9 +17,9 @@ function CreatePost() {
     fd.append("title", title)
     fd.append("content", content)
     fd.append("userId", localStorage.getItem("userId"))
-    const url = "http://localhost:3000/api/post/"
-    axios
-      .post(url, fd, config)
+    // const url = "http://localhost:3000/api/post/"
+    authAxios
+      .post("/post", fd)
       .then(() => {
         alert("Votre post a bien ete creez !")
         window.location.reload()

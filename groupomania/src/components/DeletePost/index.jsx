@@ -1,4 +1,4 @@
-import Axios from "axios"
+import authAxios from "../Authorization"
 import "./index.css"
 import { useState } from "react"
 import Modal from "react-modal"
@@ -7,18 +7,9 @@ Modal.setAppElement("#root")
 export default function DeletePost() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  const url = "http://localhost:3000/api/post/"
-
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   function deletePost() {
-    Axios.delete(url + localStorage.getItem("postIdDelete"), config)
+    authAxios
+      .delete("/post/" + localStorage.getItem("postIdDelete"))
       .then((response) => console.log(response, "Post Supprime"))
       .catch((err) => console.log(err, "Delete post failed"))
   }

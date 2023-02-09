@@ -3,7 +3,6 @@ const post = require('../models/modelsPost');
 const User = require('../models/User');
 const { STATUS_CODES } = require('http');
 const { comment } = require('../routes/commentaire');
-const { response } = require('express');
 
 exports.createComment = (req, res, next) => {
 

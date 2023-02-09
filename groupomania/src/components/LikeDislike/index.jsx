@@ -1,5 +1,5 @@
 import Axios from "axios"
-import React, { useState, useEffect } from "react"
+import React, { useState /*, useEffect*/ } from "react"
 import "./index.css"
 
 export default function LikeDislike(props) {
@@ -8,17 +8,7 @@ export default function LikeDislike(props) {
   const [dislikeCount, setDislikeCount] = useState([0])
   const [activeBtn, setActiveBtn] = useState("none")
 
-  const postId = localStorage.getItem("postId")
-  const url = `http://localhost:3000/api/post/${postId}/like`
-
-  //Requete Axios pour la recuperation et le compteur des likes par post
-  useEffect(() => {
-    Axios.get(url)
-      .then((response) => {
-        let data = response.data
-      })
-      .catch((err) => console.log(err, "Error axios get like/dislike"))
-  }, [])
+  const url = `http://localhost:3000/api/post/${props.postId}/like`
 
   //Requete Axios pour l'envoi des like par l'user vers la bdd
   async function axiosPostLike() {
@@ -32,18 +22,28 @@ export default function LikeDislike(props) {
       .catch((err) => err, "Err like/Dislike")
   }
 
+  //Requete Axiso pour recuperation des like
+  // useEffect(() => {
+  //   Axios.get(url)
+  //     .then((response) => {
+  //       let data = response.data
+  //       console.log(data)
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [])
+
   const handleLikeClick = () => {
     if (activeBtn === "none") {
-      setLikeCount(likeCount + 1)
       setLike(+1)
       axiosPostLike()
+      setLikeCount(likeCount + 1)
       setActiveBtn("like")
       return
     }
     if (activeBtn === "like") {
-      setLikeCount(likeCount - 1)
       setLike(-1)
       axiosPostLike()
+      setLikeCount(likeCount - 1)
       setActiveBtn("none")
       return
     }
@@ -51,18 +51,18 @@ export default function LikeDislike(props) {
 
   const handleDislikeClick = () => {
     if (activeBtn === "none") {
-      setDislikeCount(dislikeCount + 1)
-      setActiveBtn("dislike")
       setLike(-1)
       axiosPostLike()
+      setDislikeCount(dislikeCount + 1)
+      setActiveBtn("dislike")
       return
     }
 
     if (activeBtn === "dislike") {
-      setDislikeCount(dislikeCount - 1)
-      setActiveBtn("none")
       setLike(+1)
       axiosPostLike()
+      setDislikeCount(dislikeCount - 1)
+      setActiveBtn("none")
       return
     }
   }

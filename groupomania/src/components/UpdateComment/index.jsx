@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Axios from "axios"
+import authAxios from "../Authorization/index"
 import Modal from "react-modal"
 import "./index.css"
 
@@ -9,19 +9,10 @@ export default function UpdateComment(props) {
   const [content, setContent] = useState("")
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  const url = `http://localhost:3000/api/post/${props.postId}/comment/${props.commentId}`
-
-  //Authorisation
-  let accesToken = localStorage.getItem("accesToken")
-  let config = {
-    headers: {
-      Authorization: `Bearer ${accesToken}`,
-    },
-  }
-
   // //Recuperation data commentaires
   useEffect(() => {
-    Axios.get(url, config)
+    authAxios
+      .get(`/post/${props.postId}/comment/${props.commentId}`)
       .then((response) => {
         let data = response.data
         setDataComment(data)
@@ -32,10 +23,11 @@ export default function UpdateComment(props) {
 
   //Requete Put Axios
   async function axiosPutComment() {
-    Axios.put(url, {
-      content: content,
-    })
-      .then((response) => console.log(response))
+    authAxios
+      .put(`/post/${props.postId}/comment/${props.commentId}`, {
+        content: content,
+      })
+      .then((response) => window.location.reload())
       .catch((err) => console.log(err, "Erreur lors de l'update du comment"))
   }
 

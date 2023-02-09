@@ -1,12 +1,11 @@
 import React from "react"
-import Axios from "axios"
+import authAxios from "../Authorization/index.jsx"
 import "./index.css"
 
 export class CreateComment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: "",
       content: "",
       postIdData: this.props,
     }
@@ -14,32 +13,14 @@ export class CreateComment extends React.Component {
 
   // Envoi data vers serveurs
   axiosPostComment = () => {
-    //Authorisation 2.0
-    // let accesToken = localStorage.getItem("accesToken")
-    // const headers = {
-    //   Authorization: `Bearer ${accesToken}`,
-    // }
-    //Authorisation
-
-    // let config = {
-    //   headers: {
-    //     Authorization: `Bearer ${accesToken}`,
-    //   },
-    // }
     const postId = localStorage.getItem("postId")
-    const url = `http://localhost:3000/api/post/${postId}/comment`
-    Axios.post(
-      url,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accesToken}`,
-      //   },
-      // },
-      {
-        userId: localStorage.getItem("userId"),
+    authAxios
+      .post(`/post/${postId}/comment`, {
         content: this.setState.content,
-      }
-    ).then(() => window.location.reload())
+        userId: localStorage.getItem("userId"),
+      })
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err))
   }
 
   //Initialisation du content

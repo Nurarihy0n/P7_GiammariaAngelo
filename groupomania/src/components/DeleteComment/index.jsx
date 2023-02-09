@@ -1,19 +1,13 @@
-import Axios from "axios"
+import React from "react"
+import authAxios from "../Authorization/index.jsx"
 import "./index.css"
 
 export default function DeleteComment(props) {
-  const url = `http://localhost:3000/api/post/${props.postIdComment}/comment/${props.commentId}`
-
-  //Authorisation
-  // let accesToken = localStorage.getItem("accesToken")
-  // let config = {
-  //   headers: {
-  //     Authorization: `Bearer ${accesToken}`,
-  //   },
-  // }
+  // const url = `http://localhost:3000/api/post/${props.postIdComment}/comment/${props.commentId}`
 
   function deleteComment() {
-    Axios.delete(url)
+    authAxios
+      .delete(`/post/${props.postIdComment}/comment/${props.commentId}`)
       .then((response) => {
         console.log(response)
       })

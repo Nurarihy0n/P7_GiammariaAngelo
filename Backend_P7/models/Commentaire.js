@@ -7,19 +7,7 @@ const Commentaire = connection.define('Commentaire', {
     comId: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
     postId: { type: Sequelize.INTEGER,allowNull: false},
     content: { type: Sequelize.STRING, allowNull: false},
-    userId: { type: Sequelize.INTEGER,}
+    userId: { type: Sequelize.INTEGER, allowNull: false}
 });
-
-// Commentaire.hasMany(Like, {
-//     foreignKey: 'postId',
-//     onDelete: 'CASCADE',
-//     onUpdate: 'CASCADE'
-// });
-
-// Commentaire.hasMany(ComReport, {
-//     foreignKey: 'comId',
-//     onDelete: 'CASCADE',
-//     onUpdate: 'CASCADE'
-// });
 
 module.exports = Commentaire;

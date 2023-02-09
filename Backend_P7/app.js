@@ -14,7 +14,7 @@ const moderatorReportControl = require('./routes/moderatorReport')
 
 //plugin express-rate-limit
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, //15 minutes
+    windowMs: 30 * 60 * 1000, //30 minutes
     max: 1000 //Limite chaque adresse IP a 1000 requete par fenetre
 });
 

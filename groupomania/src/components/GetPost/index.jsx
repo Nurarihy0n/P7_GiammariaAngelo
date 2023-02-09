@@ -1,4 +1,4 @@
-import Axios from "axios"
+import authAxios from "../Authorization/index"
 import React, { useEffect, useState } from "react"
 import "./index.css"
 import "../DeletePost/index"
@@ -13,9 +13,10 @@ export default function GetPost() {
   const [apiData, setApiData] = useState([])
 
   //Requete pour recuperation data post
-  const url = "http://localhost:3000/api/post"
+  // const url = "http://localhost:3000/api/post"
   useEffect(() => {
-    Axios.get(url)
+    authAxios
+      .get("/post")
       .then((response) => {
         setApiData(response.data)
       })

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import NavBarConnection from "../../components/NavBarConnection/index"
 import HeaderLogo from "../../components/HeaderLogo/index"
 import Axios from "axios"
@@ -10,13 +11,24 @@ import Axios from "axios"
 function SignUp() {
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
+  const navigate = useNavigate()
 
   const url = "http://localhost:3000/api/auth/signUp/"
 
-  const handleFormSub = () => {
-    Axios.post(url, { email: userEmail, password: userPassword }).then(
-      (response) => console.log(response)
-    )
+  async function axiosPost() {
+    Axios.post(url, { email: userEmail, password: userPassword })
+      .then(() => {
+        alert(
+          "L'equipe Groupomania vous remerci pour votre inscription. Vous allez etre redirigez vers la page de connexion, Merci !"
+        )
+        return navigate("/Login")
+      })
+      .catch((err) => console.log(err))
+  }
+
+  const handleFormSub = (e) => {
+    e.preventDefault()
+    axiosPost()
   }
 
   return (

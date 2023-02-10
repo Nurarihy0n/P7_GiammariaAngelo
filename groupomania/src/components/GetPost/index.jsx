@@ -11,6 +11,7 @@ import LikeDislike from "../LikeDislike"
 
 export default function GetPost() {
   const [apiData, setApiData] = useState([])
+  const [showComment, setShowComment] = useState(false)
 
   //Requete pour recuperation data post
   // const url = "http://localhost:3000/api/post"
@@ -81,7 +82,22 @@ export default function GetPost() {
               <CreateComment dataPostId={data.postId} />
             </div>
             <div className="readCommentContainer">
-              <ReadComment dataPostId={data.postId} />
+              {showComment === true ? (
+                <ReadComment dataPostId={data.postId} />
+              ) : (
+                ""
+              )}
+              <div className="containerHideComment">
+                <button
+                  type="button"
+                  onClick={() => setShowComment((prev) => !prev)}
+                  className="btnHideAndShowComment"
+                >
+                  {showComment === true
+                    ? "cacher commentaires"
+                    : "voir commentaires"}
+                </button>
+              </div>
             </div>
           </div>
         )

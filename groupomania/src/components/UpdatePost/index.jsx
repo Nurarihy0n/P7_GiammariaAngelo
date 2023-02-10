@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Navigate } from "react-router-dom"
 import authAxios from "../Authorization"
 import NavBarHome from "../NavBarHome/index"
 import "./index.css"
@@ -9,8 +10,6 @@ export default function UpdatePost() {
   const [image, setImage] = useState("")
   const [userId, setUserId] = useState("")
   const [apiDataPostId, setApiDataPostId] = useState([])
-
-  const url = "http://localhost:3000/api/post/"
 
   //Recuperation post data (localStorage)
   useEffect(() => {
@@ -39,6 +38,7 @@ export default function UpdatePost() {
       .put("/post/" + localStorage.getItem("postId"), fd)
       .then((response) => {
         console.log(response, "Post Updated")
+        return <Navigate to="/Home" />
       })
   }
 

@@ -29,7 +29,12 @@ img{
 .createCommentContainer{
     margin-left: 10px;
 }
-
+.btnHideAndShowComment{
+    border: none;
+    background-color: white;
+    color: grey;
+    
+}
 
 @media screen and (min-width: 600px){
     

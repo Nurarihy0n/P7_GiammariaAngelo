@@ -1,5 +1,5 @@
-import Axios from "axios"
-import React, { useState /*, useEffect*/ } from "react"
+import authAxios from "../Authorization"
+import React, { useState, useEffect } from "react"
 import "./index.css"
 
 export default function LikeDislike(props) {
@@ -7,30 +7,31 @@ export default function LikeDislike(props) {
   const [likeCount, setLikeCount] = useState([0])
   const [dislikeCount, setDislikeCount] = useState([0])
   const [activeBtn, setActiveBtn] = useState("none")
-
-  const url = `http://localhost:3000/api/post/${props.postId}/like`
+  const [likeInBdd, setLikeInBdd] = useState("")
 
   //Requete Axios pour l'envoi des like par l'user vers la bdd
   async function axiosPostLike() {
-    Axios.post(url, {
-      userId: localStorage.getItem("userId"),
-      liked: like,
-    })
+    authAxios
+      .post(`/post/${props.postId}/like`, {
+        userId: localStorage.getItem("userId"),
+        liked: like,
+      })
       .then((response) => {
-        console.log(response)
+        console.log(response, "Like/Dislike send")
       })
       .catch((err) => err, "Err like/Dislike")
   }
 
-  //Requete Axiso pour recuperation des like
-  // useEffect(() => {
-  //   Axios.get(url)
-  //     .then((response) => {
-  //       let data = response.data
-  //       console.log(data)
-  //     })
-  //     .catch((err) => console.log(err))
-  // }, [])
+  //Requete Axios pour recuperation des like
+  useEffect(() => {
+    authAxios
+      .get(`/post/${props.postId}/like`)
+      .then((response) => {
+        let data = response.data
+        console.log(data)
+      })
+      .catch((err) => console.log(err))
+  }, [])
 
   const handleLikeClick = () => {
     if (activeBtn === "none") {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import authAxios from "../Authorization"
 import NavBarHome from "../NavBarHome/index"
 import "./index.css"
@@ -10,6 +10,7 @@ export default function UpdatePost() {
   const [image, setImage] = useState("")
   const [userId, setUserId] = useState("")
   const [apiDataPostId, setApiDataPostId] = useState([])
+  const navigate = useNavigate()
 
   //Recuperation post data (localStorage)
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function UpdatePost() {
       .put("/post/" + localStorage.getItem("postId"), fd)
       .then((response) => {
         console.log(response, "Post Updated")
-        return <Navigate to="/Home" />
+        return navigate("/home")
       })
   }
 
@@ -46,6 +47,7 @@ export default function UpdatePost() {
     e.preventDefault()
     axiosPut()
     alert("Votre post a bien ete modifie !")
+    return
   }
 
   //Initialisation: Champs du formulaire

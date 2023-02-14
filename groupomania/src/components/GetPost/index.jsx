@@ -18,7 +18,12 @@ export default function GetPost() {
     authAxios
       .get("/post")
       .then((response) => {
-        setApiData(response.data)
+        let data = response.data
+        const byDate = data.sort((a, b) => {
+          if (b.updatedAt < a.updatedAt) return -1
+          return 1
+        })
+        setApiData(byDate)
         console.log(apiData)
       })
       .catch((err) => console.log(err))
@@ -33,6 +38,7 @@ export default function GetPost() {
 
   //Verification de l'auteur et moderateur
   let userIdConnect = localStorage.getItem("userId")
+  let admin = localStorage.getItem("admin")
 
   return (
     <div>
@@ -44,7 +50,7 @@ export default function GetPost() {
             <div className="imgPostHome">
               <img src={data.image} alt={"img du post"} />
             </div>
-            {data.userId == userIdConnect ? (
+            {data.userId == userIdConnect || admin == true ? (
               <div className="divBtnUDS">
                 <button
                   className="updateBtn"

@@ -15,8 +15,10 @@ function Login() {
       .then((response) => {
         const accesToken = response.data.token
         const userId = response.data.userId
+        const admin = response.data.admin
         localStorage.setItem("accesToken", accesToken)
         localStorage.setItem("userId", userId)
+        localStorage.setItem("admin", admin)
         return navigate("/Home")
       })
       .catch((err) => console.log(err, "err login page" + userEmail))

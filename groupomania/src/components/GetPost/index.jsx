@@ -14,12 +14,12 @@ export default function GetPost() {
   const [showComment, setShowComment] = useState(false)
 
   //Requete pour recuperation data post
-  // const url = "http://localhost:3000/api/post"
   useEffect(() => {
     authAxios
       .get("/post")
       .then((response) => {
         setApiData(response.data)
+        console.log(apiData)
       })
       .catch((err) => console.log(err))
   }, [])
@@ -31,6 +31,9 @@ export default function GetPost() {
     localStorage.setItem("postIdDelete", postId)
   }
 
+  //Verification de l'auteur et moderateur
+  let userIdConnect = localStorage.getItem("userId")
+
   return (
     <div>
       {apiData.map((data) => {
@@ -41,36 +44,42 @@ export default function GetPost() {
             <div className="imgPostHome">
               <img src={data.image} alt={"img du post"} />
             </div>
-            <div className="divBtnUDS">
-              <button
-                className="updateBtn"
-                onClick={() => {
-                  setPostId(data.postId)
-                }}
-              >
-                <Link
-                  to="/UpdatePost/"
-                  style={{ textDecoration: "None", color: "Black" }}
+            {data.userId == userIdConnect ? (
+              <div className="divBtnUDS">
+                <button
+                  className="updateBtn"
+                  onClick={() => {
+                    setPostId(data.postId)
+                  }}
                 >
-                  Modifier
-                </Link>
-              </button>
-              <div> | </div>
-              <button
-                className="deleteBtn"
-                onClick={() => {
-                  setDeletePostId(data.postId)
-                }}
-              >
-                <DeletePost />
-              </button>
-              <div> | </div>
-              <button
-                className="signalerBtn"
-                onClick={() => setPostId(data.postId)}
-              >
-                <SignalerPost postId={data.postId} />
-              </button>
+                  <Link
+                    to="/UpdatePost/"
+                    style={{ textDecoration: "None", color: "Black" }}
+                  >
+                    Modifier
+                  </Link>
+                </button>
+                <div> | </div>
+                <button
+                  className="deleteBtn"
+                  onClick={() => {
+                    setDeletePostId(data.postId)
+                  }}
+                >
+                  <DeletePost />
+                </button>
+                <div> | </div>
+                <button
+                  className="signalerBtn"
+                  onClick={() => setPostId(data.postId)}
+                >
+                  <SignalerPost postId={data.postId} />
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}{" "}
+            <div className="divBtnUDS">
               <div onClick={() => setPostId(data.postId)}>
                 <LikeDislike postId={data.postId} />
               </div>

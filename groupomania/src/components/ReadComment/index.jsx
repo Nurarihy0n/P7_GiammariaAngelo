@@ -17,6 +17,8 @@ export default function ReadComment(props) {
       .catch((err) => console.log(err, "erreur recuperation des commentaires"))
   }, [])
 
+  let userIdConnect = localStorage.getItem("userId")
+
   return (
     <div>
       {dataComment.map((data) => {
@@ -25,17 +27,21 @@ export default function ReadComment(props) {
             <div id="divToTransform" className="commentSection">
               {data.content}
             </div>
-            <div className="container_modifiaction_comment">
-              <button className="modify_btn">
-                <ModifyComment postId={data.postId} commentId={data.comId} />
-              </button>
-              <div className="delete_btn">
-                <DeleteComment
-                  postIdComment={data.postId}
-                  commentId={data.comId}
-                />
+            {data.userId == userIdConnect ? (
+              <div className="container_modifiaction_comment">
+                <button className="modify_btn">
+                  <ModifyComment postId={data.postId} commentId={data.comId} />
+                </button>
+                <div className="delete_btn">
+                  <DeleteComment
+                    postIdComment={data.postId}
+                    commentId={data.comId}
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         )
       })}

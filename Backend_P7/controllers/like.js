@@ -4,19 +4,21 @@ const userLiked = require('../models/userLiked');
 exports.likeDislike = async (req, res, next) => {
 
     let userId = req.body.userId;
-    let likeOrDislike = req.body.liked;
+    let like = req.body.liked;
+    let dislike = req.body.disliked
     let { postId } = req.params;
     postId = parseInt(postId)
 
     let userLike = await userLiked.findOne({ where: { userId: userId, postId: postId } });
     // cree l'utilisateur qui like dans la bdd
-    if (likeOrDislike == 1) {
+    if (like == 1) {
         if (userLike == null) {
             try {
                 const like = await new userLiked({
                     "userId": userId,
                     "postId": postId,
-                    "liked": 1
+                    "liked": 1,
+                    "disliked": 0
                 }).save()
 
                 if (like != null) {
@@ -28,10 +30,12 @@ exports.likeDislike = async (req, res, next) => {
             }
         }
         //Si l'utilisateur annule sont dislike
-        else if (userLike.liked == -1) {
-            userLike.increment('liked', {by: 1});
+        else if (userLike.disliked == 1) {
+            userLike.decrement('disliked', {by: 1});
+            userLike.increment('liked', {by: 1})
             return res.status(200).json({ userLike, message: "Like updated !"})
         }
+
         //Si l'utilisateur like et qu'il est deja enregistree dans la bdd
         else if (userLike.liked == 0) {
             userLike.increment('liked', {by: 1});
@@ -42,14 +46,26 @@ exports.likeDislike = async (req, res, next) => {
             return res.status(200).json({ message: "l'utilisateur a dejà liké ce post", userLike })
         }
     }
+    //Si l'utilisateur annule juste sont like
+    if(like == -1) {
+        if(userLike.liked == 1 ){
+            userLike.decrement('liked', {by: 1})
+            return res.status(200).json({userLike, message: "Like Updated !"})
+        } else {
+            return res.status(200).json({ message: "Err", userLike })
+        }
+    }
+
+
     //Cree un utilisateur qui dislike dans la bdd
-    if (likeOrDislike == -1) {
+    if (dislike == 1) {
         if (userLike == null) {
             try {
                 const dislike = await new userLiked({
                     "userId": userId,
                     "postId": postId,
-                    "liked": -1
+                    "disliked": 1,
+                    "liked": 0
                 }).save()
 
                 if (dislike != null) {
@@ -57,17 +73,18 @@ exports.likeDislike = async (req, res, next) => {
                 }
             }
             catch (err) {
-                return res.status(500).json({ err, message: "Erreur de création du like" });
+                return res.status(500).json({ err, message: "Erreur de création du dislike" });
             }
         }
         //Si l'utilisateur annule sont like
         else if (userLike.liked == 1) {
             userLike.decrement('liked', {by: 1});
+            userLike.increment('disliked', {by: 1});
             return res.status(200).json({userLike, message: "Dislike updated"})
         }
         //Si l'utilisateur dislike un post et qu'il est deja dans la bdd
-        else if (userLike.liked == 0) {
-            userLike.decrement('liked', {by: 1});
+        else if (userLike.disliked == 0) {
+            userLike.increment('disliked', {by: 1});
             return res.status(200).json({userLike, message: "Dislike updated"})
         }
 
@@ -75,7 +92,14 @@ exports.likeDislike = async (req, res, next) => {
             return res.status(200).json({ message: "l'utilisateur a dejà disliké ce post", userLike })
         }
     }
-
+    //Si l'utilisateur annule juste sont dislike
+    if(dislike = -1){
+        if(userLike.disliked == 1){
+        userLike.decrement('disliked', {by: 1})
+        return res.status(200).json({userLike, message: "Dislike Updated !"})
+    } else {
+        return res.status(200).json({ message: "Err", userLike })
+    }}
 }
 
 exports.getLikeDislike = async (req, res, next) => {

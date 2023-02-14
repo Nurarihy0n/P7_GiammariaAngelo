@@ -5,7 +5,8 @@ const modelsPost = require('./modelsPost');
 const userLiked = connection.define('userLiked', {
     userId: { type: Sequelize.INTEGER, unique: 'composite_key'},
     postId: { type: Sequelize.INTEGER, unique: 'composite_key'},
-    liked: { type: Sequelize.INTEGER}
+    liked: { type: Sequelize.INTEGER},
+    disliked: {type: Sequelize.INTEGER}
 });
 
 

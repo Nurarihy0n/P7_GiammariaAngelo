@@ -7,10 +7,9 @@ export default function LikeDislike(props) {
   const [likeCount, setLikeCount] = useState([0])
   const [dislikeCount, setDislikeCount] = useState([0])
   const [activeBtn, setActiveBtn] = useState("none")
-  const [likeInBdd, setLikeInBdd] = useState("")
 
   //Requete Axios pour l'envoi des like par l'user vers la bdd
-  async function axiosPostLike() {
+  function axiosPostLike() {
     authAxios
       .post(`/post/${props.postId}/like`, {
         userId: localStorage.getItem("userId"),
@@ -28,7 +27,8 @@ export default function LikeDislike(props) {
       .get(`/post/${props.postId}/like`)
       .then((response) => {
         let data = response.data
-        console.log(data)
+        const totalLike = data.reduce((acc, cur) => acc + cur.liked, 0)
+        setLikeCount(totalLike)
       })
       .catch((err) => console.log(err))
   }, [])
@@ -73,19 +73,19 @@ export default function LikeDislike(props) {
       <div className="container">
         <div className="btn-container">
           <button
-            className={`btn ${activeBtn === "like" ? "like-active" : ""}`}
             onClick={handleLikeClick}
+            className={`btn ${activeBtn === "like" ? "like-active" : ""}`}
           >
             <span>↑</span>
             Like {likeCount}
           </button>
 
           <button
-            className={`btn ${activeBtn === "dislike" ? "dislike-active" : ""}`}
             onClick={handleDislikeClick}
+            className={`btn ${activeBtn === "dislike" ? "dislike-active" : ""}`}
           >
             <span>↓</span>
-            Dislike {dislikeCount}
+            Dislike {/*dislikeCount*/}
           </button>
         </div>
       </div>

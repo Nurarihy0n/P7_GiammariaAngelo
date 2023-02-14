@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react"
 import "./index.css"
 
 export default function LikeDislike(props) {
-  const [like, setLike] = useState("")
-  const [dislike, setDislike] = useState("")
+  // const [like, setLike] = useState(1)
+  // const [dislike, setDislike] = useState(1)
   const [likeCount, setLikeCount] = useState([0])
   const [dislikeCount, setDislikeCount] = useState([0])
   const [activeBtn, setActiveBtn] = useState("none")
@@ -14,7 +14,7 @@ export default function LikeDislike(props) {
     authAxios
       .post(`/post/${props.postId}/like`, {
         userId: localStorage.getItem("userId"),
-        liked: like,
+        liked: 1,
       })
       .then((response) => {
         console.log(response, "Like sent")
@@ -26,14 +26,38 @@ export default function LikeDislike(props) {
     authAxios
       .post(`/post/${props.postId}/like`, {
         userId: localStorage.getItem("userId"),
-        disliked: dislike,
+        disliked: 1,
       })
       .then((response) => {
         console.log(response, "Dislike sent")
       })
       .catch((err) => err, "Err Dislike")
   }
+  //Requete axios pour annuler like
+  async function axiosPostRemoveLike() {
+    authAxios
+      .post(`/post/${props.postId}/like`, {
+        userId: localStorage.getItem("userId"),
+        liked: -1,
+      })
+      .then((response) => {
+        console.log(response, "Like removed")
+      })
+      .catch((err) => err, "Err Dislike")
+  }
 
+  //pour annuler dislike
+  async function axiosPostRemoveDislike() {
+    authAxios
+      .post(`/post/${props.postId}/like`, {
+        userId: localStorage.getItem("userId"),
+        disliked: -1,
+      })
+      .then((response) => {
+        console.log(response, "Dislike removed")
+      })
+      .catch((err) => err, "Err Dislike")
+  }
   //Requete Axios pour recuperation des like
   useEffect(() => {
     authAxios
@@ -50,17 +74,13 @@ export default function LikeDislike(props) {
 
   const handleLikeClick = () => {
     if (activeBtn === "none") {
-      setLike(+1)
-      console.log("Le suposse like", like)
-      // axiosPostLike()
+      axiosPostLike()
       setLikeCount(likeCount + 1)
       setActiveBtn("like")
       return
     }
     if (activeBtn === "like") {
-      setLike(-1)
-      // axiosPostLike()
-      console.log("Le suposse like", like)
+      axiosPostRemoveLike()
       setLikeCount(likeCount - 1)
       setActiveBtn("none")
       return
@@ -69,18 +89,14 @@ export default function LikeDislike(props) {
 
   const handleDislikeClick = () => {
     if (activeBtn === "none") {
-      setDislike(+1)
-      console.log("Le suposse dislike", dislike)
-      // axiosPostDislike()
+      axiosPostDislike()
       setDislikeCount(dislikeCount + 1)
       setActiveBtn("dislike")
       return
     }
 
     if (activeBtn === "dislike") {
-      setDislike(-1)
-      console.log("Le suposse dislike", dislike)
-      // axiosPostDislike()
+      axiosPostRemoveDislike()
       setDislikeCount(dislikeCount - 1)
       setActiveBtn("none")
       return

@@ -50,7 +50,7 @@ export default function GetPost() {
             <div className="imgPostHome">
               <img src={data.image} alt={"img du post"} />
             </div>
-            {data.userId == userIdConnect || admin == true ? (
+            {data.userId == userIdConnect || admin == "true" ? (
               <div className="divBtnUDS">
                 <button
                   className="updateBtn"
@@ -82,9 +82,7 @@ export default function GetPost() {
                   <SignalerPost postId={data.postId} />
                 </button>
               </div>
-            ) : (
-              <div></div>
-            )}{" "}
+            ) : null}{" "}
             <div className="divBtnUDS">
               <div onClick={() => setPostId(data.postId)}>
                 <LikeDislike postId={data.postId} />

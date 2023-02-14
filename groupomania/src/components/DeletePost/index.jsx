@@ -38,12 +38,13 @@ export default function DeletePost() {
           content: {
             borderRadius: "20px",
             border: "1px solid #4E5166",
+            height: "20%",
           },
         }}
       >
         <div className="ValidationSuppression">
           <h2>Voulez-vous vraiment supprimer ce post ?</h2>
-          <button onClick={() => handleDelete()}>Oui</button>
+          <button onClick={() => handleDelete()}>Oui</button>{" "}
           <button onClick={() => setModalIsOpen(false)}>Annulez</button>
         </div>
       </Modal>

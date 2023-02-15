@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react"
 import "./index.css"
 
 export default function LikeDislike(props) {
-  // const [like, setLike] = useState(1)
-  // const [dislike, setDislike] = useState(1)
   const [likeCount, setLikeCount] = useState([0])
   const [dislikeCount, setDislikeCount] = useState([0])
   const [activeBtn, setActiveBtn] = useState("none")

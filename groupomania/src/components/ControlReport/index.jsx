@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react"
-import Axios from "axios"
+// import React, { useEffect, useState } from "react"
+// import Axios from "axios"
+import ImgProgress from "../../assets/workOnProgress.jpeg"
 
 export default function ControlReport() {
-  const [dataReport, setDataReport] = useState("")
+  // const [dataReport, setDataReport] = useState("")
 
-  //Recuperation des signalement
-  const urlReportBDD = "http://localhost:3000/api/post/1/report"
-  useEffect(() => {
-    Axios.get(urlReportBDD)
-      .then((response) => {
-        setDataReport(response.data)
-        console.log(dataReport)
-      })
-      .catch((err) => console.log(err, "err get report from bd"))
-  }, [])
+  // //Recuperation des signalement
+  // const urlReportBDD = "http://localhost:3000/api/post/1/report"
+  // useEffect(() => {
+  //   Axios.get(urlReportBDD)
+  //     .then((response) => {
+  //       setDataReport(response.data)
+  //       console.log(dataReport)
+  //     })
+  //     .catch((err) => console.log(err, "err get report from bd"))
+  // }, [])
 
   return (
     <div>
@@ -41,8 +42,7 @@ export default function ControlReport() {
           </div>
         )
       })} */}
-      <h1>Controle par le moderateur des posts signale</h1>
-      <p>Creation d'un bouton de suppression</p>
+      <img src={ImgProgress} alt="en travaux" />
     </div>
   )
 }

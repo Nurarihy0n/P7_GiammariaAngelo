@@ -24,7 +24,6 @@ export default function GetPost() {
           return 1
         })
         setApiData(byDate)
-        console.log(apiData)
       })
       .catch((err) => console.log(err))
   }, [])
@@ -50,42 +49,45 @@ export default function GetPost() {
             <div className="imgPostHome">
               <img src={data.image} alt={"img du post"} />
             </div>
-            {data.userId == userIdConnect || admin == "true" ? (
-              <div className="divBtnUDS">
-                <button
-                  className="updateBtn"
-                  onClick={() => {
-                    setPostId(data.postId)
-                  }}
-                >
-                  <Link
-                    to="/UpdatePost/"
-                    style={{ textDecoration: "None", color: "Black" }}
+            <div className="divBtnUDS">
+              {data.userId == userIdConnect || admin == "true" ? (
+                <div className="container1">
+                  <button
+                    className="updateBtn"
+                    onClick={() => {
+                      setPostId(data.postId)
+                    }}
                   >
-                    Modifier
-                  </Link>
-                </button>
-                <div> | </div>
-                <button
-                  className="deleteBtn"
-                  onClick={() => {
-                    setDeletePostId(data.postId)
-                  }}
-                >
-                  <DeletePost />
-                </button>
-                <div> | </div>
+                    <Link
+                      to="/UpdatePost/"
+                      style={{ textDecoration: "None", color: "Black" }}
+                    >
+                      Modifier
+                    </Link>
+                  </button>
+                  <div> | </div>
+                  <button
+                    className="deleteBtn"
+                    onClick={() => {
+                      setDeletePostId(data.postId)
+                    }}
+                  >
+                    <DeletePost />
+                  </button>
+                  <div> | </div>
+                </div>
+              ) : null}{" "}
+              <div className="container2">
                 <button
                   className="signalerBtn"
                   onClick={() => setPostId(data.postId)}
                 >
                   <SignalerPost postId={data.postId} />
                 </button>
-              </div>
-            ) : null}{" "}
-            <div className="divBtnUDS">
-              <div onClick={() => setPostId(data.postId)}>
-                <LikeDislike postId={data.postId} />
+
+                <div onClick={() => setPostId(data.postId)}>
+                  <LikeDislike postId={data.postId} />
+                </div>
               </div>
             </div>
             <div

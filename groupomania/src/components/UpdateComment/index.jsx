@@ -58,6 +58,7 @@ export default function UpdateComment(props) {
           content: {
             borderRadius: "20px",
             border: "1px solid #4E5166",
+            height: "20%",
           },
         }}
       >
@@ -72,8 +73,17 @@ export default function UpdateComment(props) {
                 onChange={handleChangeContent}
               />
             </label>
-            <button onClick={handleModify}>Enregistrez</button>
-            <button onClick={() => setModalIsOpen(false)}>Annulez</button>
+            <div className="containerCommentBtn">
+              <button className="saveCommentUpdate" onClick={handleModify}>
+                Enregistrez
+              </button>
+              <button
+                className="confirmDeleteComment"
+                onClick={() => setModalIsOpen(false)}
+              >
+                Annulez
+              </button>
+            </div>
           </form>
         </div>
       </Modal>

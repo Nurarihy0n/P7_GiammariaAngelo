@@ -1,17 +1,3 @@
-/* .createPost {
-    display: flex;
-    justify-content: center;
-}
-
-.inputTitle, .inputContent, .inputImage {
-    margin-top: 25px;   
-}
-
-.inputContent {
-    width: 25rem;
-    height: 9rem;
-} */
-
 .inputTitle {
   margin-top: 60px;
   height: 45px;
